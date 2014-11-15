@@ -1,134 +1,112 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--Project was exported from assembly: D:\Kalkulator\Kalkulator1.exe-->
   <PropertyGroup>
+    <ProjectGuid>{E9137ED8-0060-4ABA-B18A-76AD58379322}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E8EC489B-ADE5-488F-9F24-ECA58D79555A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AssemblyName>Kalkulator1</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
-    <FileAlignment>512</FileAlignment>
-    <RootNamespace>Kalkulator1</RootNamespace>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="BouncyCastle.Crypto">
-      <HintPath>lib\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
+    <Reference Include="BouncyCastle.Crypto" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Security" />
-    <Reference Include="Gnostice.Documents">
-      <HintPath>lib\Gnostice.Documents.dll</HintPath>
-    </Reference>
-    <Reference Include="DocX">
-      <HintPath>lib\DocX.dll</HintPath>
-    </Reference>
-    <Reference Include="Gnostice.Documents.Controls.WinForms">
-      <HintPath>lib\Gnostice.Documents.Controls.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Zen.Barcode.Core">
-      <HintPath>lib\Zen.Barcode.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml">
-      <HintPath>lib\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
+    <Reference Include="Gnostice.Documents" />
+    <Reference Include="DocX" />
+    <Reference Include="System" />
+    <Reference Include="Gnostice.Documents.Controls.WinForms" />
+    <Reference Include="Zen.Barcode.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="DocumentFormat.OpenXml" />
     <Reference Include="System.Data" />
-    <Reference Include="Ionic.Zip">
-      <HintPath>lib\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <Reference Include="Ionic.Zip" />
+    <Reference Include="Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionalClass\Certificate.cs" />
-    <Compile Include="AdditionalClass\ClassMd5.cs" />
-    <Compile Include="AdditionalClass\codeBar.cs" />
-    <Compile Include="AdditionalWindow\Commit.cs" />
-    <Compile Include="AdditionalClass\Connection.cs" />
-    <Compile Include="Attendance.cs" />
-    <Compile Include="EnteringCodes.cs" />
-    <Compile Include="ErrorProviderExtensions.cs" />
-    <Compile Include="AdditionalClass\Field.cs" />
-    <Compile Include="AdditionalWindow\GetKlk.cs" />
-    <Compile Include="printProtocol.cs" />
-    <Compile Include="printProtocolNew.cs" />
-    <Compile Include="PrintTest.cs" />
-    <Compile Include="ProtocolsList.cs" />
-    <Compile Include="RegionList.cs" />
-    <Compile Include="AdditionalWindow\SaveProtocol.cs" />
-    <Compile Include="SendProtocol.cs" />
-    <Compile Include="Start.cs" />
-    <Compile Include="Login.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ProtocolForm.cs" />
-    <Compile Include="validation\ValidationPatern.cs" />
-    <Compile Include="validation\ValidationRange.cs" />
-    <Compile Include="AdditionalClass\AttendanceItem.cs" />
-    <Compile Include="AdditionalClass\AttendanceOBWItem.cs" />
-    <Compile Include="AdditionalClass\WaitPanel.cs" />
-    <Compile Include="AdditionalWindow\CodeSend.cs" />
-    <Compile Include="AdditionalWindow\Eksport.cs" />
-    <Compile Include="AdditionalWindow\Import.cs" />
-    <Compile Include="instalClass\Instal.cs" />
-    <Compile Include="instalClass\Version.cs" />
-    <Compile Include="ResponseClass\Code.cs" />
-    <Compile Include="ResponseClass\IsLicense.cs" />
-    <Compile Include="ResponseClass\KLKresponse.cs" />
-    <Compile Include="ResponseClass\ResponseData.cs" />
-    <Compile Include="ResponseClass\Logged.cs" />
-    <Compile Include="validation\Errors.cs" />
-    <Compile Include="validation\KBWValue.cs" />
-    <Compile Include="validation\KBWErrorProvider.cs" />
-    <Compile Include="Properties\Resources.Designer.cs" />
-    <Compile Include="Properties\Settings.Designer.cs" />
-    <Compile Include="Operation.cs" />
-    <Compile Include="ErrorType.cs" />
-    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Kalkulator1.AdditionalClass\AttendanceItem.cs" />
+    <Compile Include="Kalkulator1.AdditionalClass\AttendanceOBWItem.cs" />
+    <Compile Include="Kalkulator1.AdditionalClass\WaitPanel.cs" />
+    <Compile Include="Kalkulator1.AdditionalWindow\CodeSend.cs" />
+    <Compile Include="Kalkulator1.AdditionalWindow\Eksport.cs" />
+    <Compile Include="Kalkulator1.AdditionalWindow\Import.cs" />
+    <Compile Include="Kalkulator1.instalClass\Instal.cs" />
+    <Compile Include="Kalkulator1.instalClass\Version.cs" />
+    <Compile Include="Kalkulator1.Properties\Resources.cs" />
+    <Compile Include="Kalkulator1.Properties\Settings.cs" />
+    <Compile Include="Kalkulator1.ResponseClass\Code.cs" />
+    <Compile Include="Kalkulator1.ResponseClass\IsLicense.cs" />
+    <Compile Include="Kalkulator1.ResponseClass\KLKresponse.cs" />
+    <Compile Include="Kalkulator1.ResponseClass\Logged.cs" />
+    <Compile Include="Kalkulator1.ResponseClass\ResponseData.cs" />
+    <Compile Include="Kalkulator1.validation\Errors.cs" />
+    <Compile Include="Kalkulator1.validation\KBWErrorProvider.cs" />
+    <Compile Include="Kalkulator1.validation\KBWValue.cs" />
+    <Compile Include="Kalkulator1\Attendance.cs" />
+    <Compile Include="Kalkulator1\Certificate.cs" />
+    <Compile Include="Kalkulator1\ClassMd5.cs" />
+    <Compile Include="Kalkulator1\codeBar.cs" />
+    <Compile Include="Kalkulator1\Commit.cs" />
+    <Compile Include="Kalkulator1\Connection.cs" />
+    <Compile Include="Kalkulator1\EnteringCodes.cs" />
+    <Compile Include="Kalkulator1\ErrorProviderExtensions.cs" />
+    <Compile Include="Kalkulator1\ErrorType.cs" />
+    <Compile Include="Kalkulator1\Field.cs" />
+    <Compile Include="Kalkulator1\GetKlk.cs" />
+    <Compile Include="Kalkulator1\Login.cs" />
+    <Compile Include="Kalkulator1\Operation.cs" />
+    <Compile Include="Kalkulator1\printProtocol.cs" />
+    <Compile Include="Kalkulator1\printProtocolNew.cs" />
+    <Compile Include="Kalkulator1\PrintTest.cs" />
+    <Compile Include="Kalkulator1\Program.cs" />
+    <Compile Include="Kalkulator1\ProtocolForm.cs" />
+    <Compile Include="Kalkulator1\ProtocolsList.cs" />
+    <Compile Include="Kalkulator1\RegionList.cs" />
+    <Compile Include="Kalkulator1\SaveProtocol.cs" />
+    <Compile Include="Kalkulator1\SendProtocol.cs" />
+    <Compile Include="Kalkulator1\Start.cs" />
+    <Compile Include="Kalkulator1\ValidationPatern.cs" />
+    <Compile Include="Kalkulator1\ValidationRange.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AdditionalWindow\CodeSend.resx" />
-    <EmbeddedResource Include="AdditionalWindow\Eksport.resx" />
-    <EmbeddedResource Include="AdditionalWindow\Import.resx" />
-    <EmbeddedResource Include="Attendance.resx" />
-    <EmbeddedResource Include="Commit.resx" />
-    <EmbeddedResource Include="EnteringCodes.resx" />
-    <EmbeddedResource Include="GetKlk.resx" />
-    <EmbeddedResource Include="Login.resx" />
-    <EmbeddedResource Include="PrintTest.resx" />
-    <EmbeddedResource Include="Properties\Resources.resx" />
-    <EmbeddedResource Include="ProtocolForm.resx" />
-    <EmbeddedResource Include="ProtocolsList.resx" />
-    <EmbeddedResource Include="RegionList.resx" />
-    <EmbeddedResource Include="SaveProtocol.resx" />
-    <EmbeddedResource Include="SendProtocol.resx" />
-    <EmbeddedResource Include="Start.resx" />
+    <EmbeddedResource Include="Kalkulator1.AdditionalWindow\CodeSend.resources" />
+    <EmbeddedResource Include="Kalkulator1.AdditionalWindow\Eksport.resources" />
+    <EmbeddedResource Include="Kalkulator1.AdditionalWindow\Import.resources" />
+    <EmbeddedResource Include="Kalkulator1.Properties\Resources.resources" />
+    <EmbeddedResource Include="Kalkulator1\Attendance.resources" />
+    <EmbeddedResource Include="Kalkulator1\Commit.resources" />
+    <EmbeddedResource Include="Kalkulator1\EnteringCodes.resources" />
+    <EmbeddedResource Include="Kalkulator1\GetKlk.resources" />
+    <EmbeddedResource Include="Kalkulator1\Login.resources" />
+    <EmbeddedResource Include="Kalkulator1\PrintTest.resources" />
+    <EmbeddedResource Include="Kalkulator1\ProtocolForm.resources" />
+    <EmbeddedResource Include="Kalkulator1\ProtocolsList.resources" />
+    <EmbeddedResource Include="Kalkulator1\RegionList.resources" />
+    <EmbeddedResource Include="Kalkulator1\SaveProtocol.resources" />
+    <EmbeddedResource Include="Kalkulator1\SendProtocol.resources" />
+    <EmbeddedResource Include="Kalkulator1\Start.resources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
