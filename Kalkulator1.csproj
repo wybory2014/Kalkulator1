@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\Kalkulator\Kalkulator1.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8EC489B-ADE5-488F-9F24-ECA58D79555A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>Kalkulator1</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Kalkulator1</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Security" />
+    <Reference Include="Gnostice.Documents">
+      <HintPath>lib\Gnostice.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="DocX">
+      <HintPath>lib\DocX.dll</HintPath>
+    </Reference>
+    <Reference Include="Gnostice.Documents.Controls.WinForms">
+      <HintPath>lib\Gnostice.Documents.Controls.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Zen.Barcode.Core">
+      <HintPath>lib\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="Ionic.Zip">
+      <HintPath>lib\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdditionalClass\Certificate.cs" />
+    <Compile Include="AdditionalClass\ClassMd5.cs" />
+    <Compile Include="AdditionalClass\codeBar.cs" />
+    <Compile Include="AdditionalWindow\Commit.cs" />
+    <Compile Include="AdditionalClass\Connection.cs" />
+    <Compile Include="Attendance.cs" />
+    <Compile Include="EnteringCodes.cs" />
+    <Compile Include="ErrorProviderExtensions.cs" />
+    <Compile Include="AdditionalClass\Field.cs" />
+    <Compile Include="AdditionalWindow\GetKlk.cs" />
+    <Compile Include="printProtocol.cs" />
+    <Compile Include="printProtocolNew.cs" />
+    <Compile Include="PrintTest.cs" />
+    <Compile Include="ProtocolsList.cs" />
+    <Compile Include="RegionList.cs" />
+    <Compile Include="AdditionalWindow\SaveProtocol.cs" />
+    <Compile Include="SendProtocol.cs" />
+    <Compile Include="Start.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProtocolForm.cs" />
+    <Compile Include="validation\ValidationPatern.cs" />
+    <Compile Include="validation\ValidationRange.cs" />
+    <Compile Include="AdditionalClass\AttendanceItem.cs" />
+    <Compile Include="AdditionalClass\AttendanceOBWItem.cs" />
+    <Compile Include="AdditionalClass\WaitPanel.cs" />
+    <Compile Include="AdditionalWindow\CodeSend.cs" />
+    <Compile Include="AdditionalWindow\Eksport.cs" />
+    <Compile Include="AdditionalWindow\Import.cs" />
+    <Compile Include="instalClass\Instal.cs" />
+    <Compile Include="instalClass\Version.cs" />
+    <Compile Include="ResponseClass\Code.cs" />
+    <Compile Include="ResponseClass\IsLicense.cs" />
+    <Compile Include="ResponseClass\KLKresponse.cs" />
+    <Compile Include="ResponseClass\ResponseData.cs" />
+    <Compile Include="ResponseClass\Logged.cs" />
+    <Compile Include="validation\Errors.cs" />
+    <Compile Include="validation\KBWValue.cs" />
+    <Compile Include="validation\KBWErrorProvider.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="Operation.cs" />
+    <Compile Include="ErrorType.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AdditionalWindow\CodeSend.resx" />
+    <EmbeddedResource Include="AdditionalWindow\Eksport.resx" />
+    <EmbeddedResource Include="AdditionalWindow\Import.resx" />
+    <EmbeddedResource Include="Attendance.resx" />
+    <EmbeddedResource Include="Commit.resx" />
+    <EmbeddedResource Include="EnteringCodes.resx" />
+    <EmbeddedResource Include="GetKlk.resx" />
+    <EmbeddedResource Include="Login.resx" />
+    <EmbeddedResource Include="PrintTest.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="ProtocolForm.resx" />
+    <EmbeddedResource Include="ProtocolsList.resx" />
+    <EmbeddedResource Include="RegionList.resx" />
+    <EmbeddedResource Include="SaveProtocol.resx" />
+    <EmbeddedResource Include="SendProtocol.resx" />
+    <EmbeddedResource Include="Start.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
