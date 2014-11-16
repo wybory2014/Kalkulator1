@@ -5,7 +5,7 @@ namespace Kalkulator1.instalClass
 {
 	public static class Version
 	{
-		private static string version = "2.0.0.95";
+		private static string version = "2.0.0.96";
 		public static string getVersion()
 		{
 			return "v. " + Version.version;

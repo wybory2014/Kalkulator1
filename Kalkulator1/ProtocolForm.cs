@@ -7378,7 +7378,7 @@ namespace Kalkulator1
 					this.protocolSummation.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
 					this.protocolCommittee.BackColor = System.Drawing.SystemColors.Control;
 					this.signProtocol.BackColor = System.Drawing.SystemColors.Control;
-					if (this.errorProvider1.hasHardWarning())
+					if (this.errorProvider1.hasHardWarning() || this.errorProvider1.hasWarning())
 					{
 						this.raportPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
 						this.bottomPanel.Location = new System.Drawing.Point(this.raportPanel.Location.X, this.raportPanel.Location.Y + this.raportPanel.Size.Height);
@@ -7426,7 +7426,7 @@ namespace Kalkulator1
 					this.buttonNext.Enabled = true;
 				}
 				this.setFirstFocus(this.SummationPanel);
-				if (this.errorProvider1.hasHardWarning())
+				if (this.errorProvider1.hasHardWarning() || this.errorProvider1.hasWarning())
 				{
 					this.raportPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
 					this.bottomPanel.Location = new System.Drawing.Point(this.raportPanel.Location.X, this.raportPanel.Location.Y + this.raportPanel.Size.Height);
