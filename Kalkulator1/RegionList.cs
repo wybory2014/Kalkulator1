@@ -60,7 +60,12 @@ namespace Kalkulator1
 				this.start.wait.setWaitPanel("Trwa pobieranie listy gmin", "Proszę czekać");
 			}
 			string server2 = "KALK/";
-			string uri = server2 + "geopowgm-" + this.jns;
+			string jnsTemp = this.jns;
+			while (jnsTemp.Length < 6)
+			{
+				jnsTemp = "0" + jnsTemp;
+			}
+			string uri = server2 + "geopowgm-" + jnsTemp;
 			ResponseData res = this.con.getRequestRegions(uri, 0);
 			try
 			{

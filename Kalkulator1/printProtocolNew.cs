@@ -32,7 +32,6 @@ namespace Kalkulator1
 		{
 			Framework.ActivateLicense("4E5A-14CC-D4D2-14C2-F558-B99F-C5F5-5E4B");
 			bool isWielopak = false;
-			bool isWBP = false;
 			string docErrPath = "";
 			int idxCand2 = 0;
 			XmlNode jns = headerDefinition.SelectSingleNode("/akcja_wyborcza/jns");
@@ -72,7 +71,6 @@ namespace Kalkulator1
 				if (this.isOneCandidate(candidates))
 				{
 					docDefinitionPath = docDefinitionPath.Replace("WBP", "WBP_1");
-					isWBP = true;
 				}
 			}
 			if (inst == "RDA")
@@ -514,12 +512,12 @@ namespace Kalkulator1
 										row.ReplaceText("<Lista_L" + listaId + ">", xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 										row.ReplaceText("<Lista_L" + listaId + "_skrot>", xmlLista.Attributes["oznaczenie_listy"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 									}
-									if (row.FindAll("<kandydat_nazwisko_imie>").Count > 0 || row.FindAll("<Kandydtat_L" + listaId + "_nazwisko_imie>").Count > 0)
+									if (row.FindAll("<kandydat_").Count > 0 || row.FindAll("<Kandydtat_L" + listaId + "_nazwisko_imie>").Count > 0)
 									{
 										idxCand3++;
 										foreach (XmlNode xmlPerson in xmlLista)
 										{
-											if (xmlPerson.Attributes["status"].InnerText == "A")
+											if (xmlPerson.Attributes["status"].InnerText == "A" || xmlPerson.Attributes["status"].InnerText == "S")
 											{
 												idxCand2++;
 												int iLP;
@@ -552,13 +550,57 @@ namespace Kalkulator1
 												}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 												if (xmlPerson.Attributes["kdt_plec"].InnerText == "K")
 												{
-													rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr. " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													if (this.newFile.Contains("WBP"))
+													{
+														if (this.newFile.Contains("WBP_1"))
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+														else
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+													}
+													else
+													{
+														rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
 													rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_nazwa"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 												}
 												else
 												{
-													rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr. " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													if (this.newFile.Contains("WBP"))
+													{
+														if (this.newFile.Contains("WBP_1"))
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+														else
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+													}
+													else
+													{
+														rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
 													rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_nazwa"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												}
+												if (xmlPerson.Attributes["status"].InnerText == "S" && (this.newFile.Contains("RDA") || this.newFile.Contains("RDP") || this.newFile.Contains("RDW")) && rowNew2.Cells.Count == 7)
+												{
+													rowNew2.Cells[2].InsertParagraph("X");
+													rowNew2.Cells[3].InsertParagraph("X");
+													rowNew2.Cells[4].InsertParagraph("X");
+													rowNew2.Cells[5].InsertParagraph("X");
+													rowNew2.Cells[6].InsertParagraph("X");
+												}
+												if (xmlPerson.Attributes["status"].InnerText == "S" && this.newFile.Contains("WBPTMP.docx") && rowNew2.Cells.Count == 8)
+												{
+													rowNew2.Cells[3].InsertParagraph("X");
+													rowNew2.Cells[4].InsertParagraph("X");
+													rowNew2.Cells[5].InsertParagraph("X");
+													rowNew2.Cells[6].InsertParagraph("X");
+													rowNew2.Cells[7].InsertParagraph("X");
 												}
 											}
 										}
@@ -581,401 +623,401 @@ namespace Kalkulator1
 			else
 			{
 				this.newFile = docDefinitionPath;
-			}
-			using (DocX docTemplate = DocX.Load(this.newFile))
-			{
-				this.newFile = docDefinitionPath.Replace(".docx", "TMP.docx");
-				for (int a = 1; a <= 3; a++)
+				using (DocX docTemplate = DocX.Load(this.newFile))
 				{
-					xmlValues = value.SelectSingleNode("/save/header");
-					if (a == 2)
+					this.newFile = docDefinitionPath.Replace(".docx", "TMP.docx");
+					System.Collections.IEnumerator enumerator;
+					for (int a = 1; a <= 3; a++)
 					{
-						xmlValues = value.SelectSingleNode("/save/form");
-						if (xmlValues == null)
+						xmlValues = value.SelectSingleNode("/save/header");
+						if (a == 2)
 						{
-							xmlValues = value.SelectSingleNode("/save/step3");
-						}
-						if (xmlValues == null)
-						{
-							xmlValues = value.SelectSingleNode("/save/step2");
-						}
-						if (xmlValues == null)
-						{
-							xmlValues = value.SelectSingleNode("/save/step1");
-						}
-					}
-					if (a == 3)
-					{
-						xmlValues = value.SelectSingleNode("/save/komisja_sklad");
-					}
-					if (xmlValues != null)
-					{
-						foreach (XmlNode xmlField in xmlValues)
-						{
-							if (a == 3)
+							xmlValues = value.SelectSingleNode("/save/form");
+							if (xmlValues == null)
 							{
-								foreach (Novacode.Table table in docTemplate.Tables)
+								xmlValues = value.SelectSingleNode("/save/step3");
+							}
+							if (xmlValues == null)
+							{
+								xmlValues = value.SelectSingleNode("/save/step2");
+							}
+							if (xmlValues == null)
+							{
+								xmlValues = value.SelectSingleNode("/save/step1");
+							}
+						}
+						if (a == 3)
+						{
+							xmlValues = value.SelectSingleNode("/save/komisja_sklad");
+						}
+						if (xmlValues != null)
+						{
+							enumerator = xmlValues.GetEnumerator();
+							try
+							{
+								while (enumerator.MoveNext())
 								{
-									int idxCommMember = 0;
-									foreach (Row row in table.Rows)
+									XmlNode xmlField = (XmlNode)enumerator.Current;
+									if (a == 3)
 									{
-										idxCommMember++;
-										if (row.Cells.Count > 1)
+										foreach (Novacode.Table table in docTemplate.Tables)
 										{
-											if (row.FindAll("<osoba_lp>").Count > 0 && xmlField.Attributes["obecny"].InnerText == "True")
+											int idxCommMember = 0;
+											foreach (Row row in table.Rows)
 											{
-												Row rowNew = row;
-												table.InsertRow(rowNew, idxCommMember);
-												row.ReplaceText("<osoba_lp>", idxCommMember + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-												row.ReplaceText("<osoba_ImieNazwisko>", string.Concat(new string[]
+												idxCommMember++;
+												if (row.Cells.Count > 1)
 												{
-													HttpUtility.UrlDecode(xmlField.Attributes["nazwisko"].InnerText),
-													" ",
-													HttpUtility.UrlDecode(xmlField.Attributes["imie"].InnerText),
-													" ",
-													HttpUtility.UrlDecode(xmlField.Attributes["imie2"].InnerText),
-													" - ",
-													xmlField.Attributes["funkcja"].InnerText
-												}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													if (row.FindAll("<osoba_lp>").Count > 0 && xmlField.Attributes["obecny"].InnerText == "True")
+													{
+														Row rowNew = row;
+														table.InsertRow(rowNew, idxCommMember);
+														row.ReplaceText("<osoba_lp>", idxCommMember + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														row.ReplaceText("<osoba_ImieNazwisko>", string.Concat(new string[]
+														{
+															HttpUtility.UrlDecode(xmlField.Attributes["nazwisko"].InnerText),
+															" ",
+															HttpUtility.UrlDecode(xmlField.Attributes["imie"].InnerText),
+															" ",
+															HttpUtility.UrlDecode(xmlField.Attributes["imie2"].InnerText),
+															" - ",
+															xmlField.Attributes["funkcja"].InnerText
+														}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
+												}
 											}
 										}
 									}
-								}
-							}
-							else
-							{
-								System.Collections.Generic.List<int> i = docTemplate.FindAll("<" + xmlField.Name + "*");
-								int iCount = i.Count;
-								int fCount = xmlField.InnerText.Length;
-								int x = 2;
-								if (iCount >= 1)
-								{
-									iCount++;
-									if (fCount > 0)
-									{
-										docTemplate.ReplaceText("<" + xmlField.Name + ">", xmlField.InnerText.Substring(fCount - 1, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-									}
 									else
 									{
-										docTemplate.ReplaceText("<" + xmlField.Name + ">", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-									}
-									for (int j = fCount - 2; j >= 0; j--)
-									{
-										if (fCount > 0)
+										System.Collections.Generic.List<int> i = docTemplate.FindAll("<" + xmlField.Name + "*");
+										int iCount = i.Count;
+										int fCount = xmlField.InnerText.Length;
+										int x = 2;
+										if (iCount >= 1)
 										{
-											docTemplate.ReplaceText(string.Concat(new object[]
-											{
-												"<",
-												xmlField.Name,
-												"*",
-												x,
-												">"
-											}), xmlField.InnerText.Substring(j, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-										}
-										else
-										{
-											docTemplate.ReplaceText(string.Concat(new object[]
-											{
-												"<",
-												xmlField.Name,
-												"*",
-												x,
-												">"
-											}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-										}
-										x++;
-									}
-									if (fCount < iCount)
-									{
-										for (int k = fCount; k <= iCount; k++)
-										{
+											iCount++;
 											if (fCount > 0)
 											{
-												docTemplate.ReplaceText(string.Concat(new object[]
-												{
-													"<",
-													xmlField.Name,
-													"*",
-													k,
-													">"
-												}), "*", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												docTemplate.ReplaceText("<" + xmlField.Name + ">", xmlField.InnerText.Substring(fCount - 1, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 											}
 											else
 											{
-												docTemplate.ReplaceText(string.Concat(new object[]
-												{
-													"<",
-													xmlField.Name,
-													"*",
-													k,
-													">"
-												}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												docTemplate.ReplaceText("<" + xmlField.Name + ">", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 											}
-										}
-									}
-								}
-								if (iCount == 0)
-								{
-									if (fCount > 0)
-									{
-										docTemplate.ReplaceText("<" + xmlField.Name + ">", xmlField.InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-									}
-									else
-									{
-										docTemplate.ReplaceText("<" + xmlField.Name + ">", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-									}
-								}
-								if (xmlField.Attributes.Count > 0)
-								{
-									if (xmlField.Name.Substring(0, 11) == "Kandydtat_L")
-									{
-										isWielopak = true;
-										if (xmlField.Attributes[0].Name == "id_kand")
-										{
-											foreach (Novacode.Table table in docTemplate.Tables)
+											for (int j = fCount - 2; j >= 0; j--)
 											{
-												int idxCand3 = 0;
-												foreach (Row row in table.Rows)
+												if (fCount > 0)
 												{
-													idxCand3++;
-													string strKand = xmlField.Name.Substring(0, 13);
-													if (strKand.Substring(12, 1) == "_")
+													docTemplate.ReplaceText(string.Concat(new object[]
 													{
-														strKand = xmlField.Name.Substring(0, 12);
+														"<",
+														xmlField.Name,
+														"*",
+														x,
+														">"
+													}), xmlField.InnerText.Substring(j, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												}
+												else
+												{
+													docTemplate.ReplaceText(string.Concat(new object[]
+													{
+														"<",
+														xmlField.Name,
+														"*",
+														x,
+														">"
+													}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												}
+												x++;
+											}
+											if (fCount < iCount)
+											{
+												for (int k = fCount; k <= iCount; k++)
+												{
+													if (fCount > 0)
+													{
+														docTemplate.ReplaceText(string.Concat(new object[]
+														{
+															"<",
+															xmlField.Name,
+															"*",
+															k,
+															">"
+														}), "*", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 													}
-													if (row.FindAll("<" + strKand + "_lp>").Count > 0 | row.FindAll("<" + strKand.Replace("Kandydtat", "Lista")).Count > 0)
+													else
 													{
-														if (row.FindAll("<" + strKand + "_lp>").Count > 0)
+														docTemplate.ReplaceText(string.Concat(new object[]
 														{
-															Row rowNew = row;
-															table.InsertRow(rowNew, idxCand3);
-														}
-														XmlNode xmlListy = candidates.SelectSingleNode("/listy");
-														foreach (XmlNode xmlLista in xmlListy)
-														{
-															foreach (XmlNode xmlPerson in xmlLista)
-															{
-																if (xmlPerson.Attributes["id_kand"].InnerText == xmlField.Attributes["id_kand"].InnerText)
-																{
-																	row.ReplaceText("<" + strKand.Replace("Kandydtat", "Lista") + ">", xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	row.ReplaceText("<" + strKand.Replace("Kandydtat", "Lista") + "_skrot>", xmlLista.Attributes["komitet_nazwa"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	row.ReplaceText("<" + strKand + "_lp>", idxCand3 - 3 + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	row.ReplaceText("<" + strKand + "_nazwisko_imie>", string.Concat(new string[]
-																	{
-																		xmlPerson.Attributes["nazwisko"].InnerText.ToUpper(),
-																		" ",
-																		xmlPerson.Attributes["imie1"].InnerText,
-																		" ",
-																		xmlPerson.Attributes["imie2"].InnerText
-																	}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	if (xmlPerson.Attributes["kdt_plec"].InnerText == "K")
-																	{
-																		row.ReplaceText("<" + strKand + "_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	}
-																	else
-																	{
-																		row.ReplaceText("<" + strKand + "_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	}
-																	System.Collections.Generic.List<int> ii = row.FindAll("<" + strKand + "_g");
-																	int iiCount = ii.Count;
-																	int ffCount = xmlField.InnerText.Length;
-																	int xx = 2;
-																	if (iiCount > 1)
-																	{
-																		if (ffCount > 0)
-																		{
-																			row.ReplaceText("<" + strKand + "_g>", xmlField.InnerText.Substring(ffCount - 1, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																		}
-																		else
-																		{
-																			row.ReplaceText("<" + strKand + "_g>", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																		}
-																		for (int jj = ffCount - 2; jj >= 0; jj--)
-																		{
-																			if (ffCount > 0)
-																			{
-																				row.ReplaceText(string.Concat(new object[]
-																				{
-																					"<",
-																					strKand,
-																					"_g*",
-																					xx,
-																					">"
-																				}), xmlField.InnerText.Substring(jj, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																			}
-																			else
-																			{
-																				row.ReplaceText(string.Concat(new object[]
-																				{
-																					"<",
-																					strKand,
-																					"_g*",
-																					xx,
-																					">"
-																				}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																			}
-																			xx++;
-																		}
-																		if (ffCount < iiCount)
-																		{
-																			for (int kk = ffCount; kk <= iiCount; kk++)
-																			{
-																				if (ffCount > 0)
-																				{
-																					row.ReplaceText(string.Concat(new object[]
-																					{
-																						"<",
-																						strKand,
-																						"_g*",
-																						kk,
-																						">"
-																					}), "*", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																				}
-																				else
-																				{
-																					row.ReplaceText(string.Concat(new object[]
-																					{
-																						"<",
-																						strKand,
-																						"_g*",
-																						kk,
-																						">"
-																					}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																				}
-																			}
-																		}
-																	}
-																	if (iiCount == 1)
-																	{
-																		row.ReplaceText("<" + strKand + "_g>", xmlField.InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																	}
-																}
-															}
-														}
+															"<",
+															xmlField.Name,
+															"*",
+															k,
+															">"
+														}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 													}
 												}
 											}
 										}
-									}
-									else
-									{
-										if (xmlField.Attributes[0].Name == "id_kand")
+										if (iCount == 0)
 										{
-											foreach (Novacode.Table table in docTemplate.Tables)
+											if (fCount > 0)
 											{
-												int idxCand3 = 0;
-												foreach (Row row in table.Rows)
+												docTemplate.ReplaceText("<" + xmlField.Name + ">", xmlField.InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+											}
+											else
+											{
+												docTemplate.ReplaceText("<" + xmlField.Name + ">", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+											}
+										}
+										if (xmlField.Attributes.Count > 0 && xmlField.Name.Substring(0, 11) == "Kandydtat_L")
+										{
+											isWielopak = true;
+										}
+									}
+								}
+							}
+							finally
+							{
+								System.IDisposable disposable = enumerator as System.IDisposable;
+								if (disposable != null)
+								{
+									disposable.Dispose();
+								}
+							}
+						}
+					}
+					XmlNode xmlListy = candidates.SelectSingleNode("/listy");
+					int listaId = 0;
+					enumerator = xmlListy.GetEnumerator();
+					try
+					{
+						while (enumerator.MoveNext())
+						{
+							XmlNode xmlLista = (XmlNode)enumerator.Current;
+							listaId++;
+							if (isWielopak)
+							{
+								idxCand2 = 0;
+							}
+							foreach (Novacode.Table table in docTemplate.Tables)
+							{
+								int idxCand3 = 0;
+								foreach (Row row in table.Rows)
+								{
+									if (row.FindAll("<Lista_L" + listaId + ">").Count > 0)
+									{
+										isWielopak = true;
+										row.ReplaceText("<Lista_L" + listaId + ">", xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+										row.ReplaceText("<Lista_L" + listaId + "_skrot>", xmlLista.Attributes["oznaczenie_listy"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+									}
+									if (row.FindAll("<kandydat_").Count > 0 || row.FindAll("<Kandydtat_L" + listaId + "_nazwisko_imie>").Count > 0)
+									{
+										idxCand3++;
+										foreach (XmlNode xmlPerson in xmlLista)
+										{
+											if (xmlPerson.Attributes["status"].InnerText == "A" || xmlPerson.Attributes["status"].InnerText == "S")
+											{
+												idxCand2++;
+												int iLP;
+												if (this.newFile.Contains("RDATMP.docx") || this.newFile.Contains("WBPTMP.docx") || this.newFile.Contains("WBP_1TMP.docx"))
 												{
-													idxCand3++;
-													if (row.Cells.Count > 1)
+													iLP = idxCand2;
+												}
+												else
+												{
+													iLP = idxCand2 + 2;
+												}
+												Row rowNew2 = table.InsertRow(row, iLP);
+												rowNew2.ReplaceText("<kandydat_lp>", idxCand2 + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_lp>", idxCand2 + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_nazwisko_imie>", string.Concat(new string[]
+												{
+													xmlPerson.Attributes["nazwisko"].InnerText.ToUpper(),
+													" ",
+													xmlPerson.Attributes["imie1"].InnerText,
+													" ",
+													xmlPerson.Attributes["imie2"].InnerText
+												}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												rowNew2.ReplaceText("<kandydat_nazwisko_imie>", string.Concat(new string[]
+												{
+													xmlPerson.Attributes["nazwisko"].InnerText.ToUpper(),
+													" ",
+													xmlPerson.Attributes["imie1"].InnerText,
+													" ",
+													xmlPerson.Attributes["imie2"].InnerText
+												}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												if (xmlPerson.Attributes["kdt_plec"].InnerText == "K")
+												{
+													if (this.newFile.Contains("WBP"))
 													{
-														if (row.FindAll("<kandydat_lp>").Count > 0 || row.FindAll("<kandydat_nazwisko_imie>").Count > 0 || row.FindAll("<kandydat_zgloszony_przez>").Count > 0 || row.FindAll("<kandydat_g").Count > 0)
+														if (this.newFile.Contains("WBP_1"))
 														{
-															if (!isWBP)
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+														else
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+													}
+													else
+													{
+														rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
+													rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["komitet_nazwa"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												}
+												else
+												{
+													if (this.newFile.Contains("WBP"))
+													{
+														if (this.newFile.Contains("WBP_1"))
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+														else
+														{
+															rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+														}
+													}
+													else
+													{
+														rowNew2.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_skrot"].InnerText + ", Lista nr " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
+													rowNew2.ReplaceText("<Kandydtat_L" + listaId + "_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["komitet_nazwa"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+												}
+												if (xmlPerson.Attributes["status"].InnerText == "S")
+												{
+													string strKandS;
+													if (isWielopak)
+													{
+														strKandS = "Kandydtat_L" + listaId;
+													}
+													else
+													{
+														strKandS = "kandydat";
+													}
+													System.Collections.Generic.List<int> iii = rowNew2.FindAll("<" + strKandS + "_g");
+													int iiiCount = iii.Count;
+													rowNew2.ReplaceText("<" + strKandS + "_g>", "X", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													for (int kk = 0; kk <= iiiCount; kk++)
+													{
+														rowNew2.ReplaceText(string.Concat(new object[]
+														{
+															"<",
+															strKandS,
+															"_g*",
+															kk,
+															">"
+														}), "X", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+													}
+												}
+												else
+												{
+													XmlNode xmlSaveValues = value.SelectSingleNode("/save/form");
+													if (xmlSaveValues == null)
+													{
+														xmlSaveValues = value.SelectSingleNode("/save/step3");
+													}
+													if (xmlSaveValues == null)
+													{
+														xmlSaveValues = value.SelectSingleNode("/save/step2");
+													}
+													if (xmlSaveValues == null)
+													{
+														xmlSaveValues = value.SelectSingleNode("/save/step1");
+													}
+													foreach (XmlNode xmlSaveField in xmlSaveValues)
+													{
+														if (xmlSaveField.Attributes.Count > 0)
+														{
+															if (xmlSaveField.Attributes["id_kand"].InnerText == xmlPerson.Attributes["id_kand"].InnerText && xmlPerson.Attributes["status"].InnerText == "A")
 															{
-																Row rowNew = row;
-																table.InsertRow(rowNew, idxCand3);
-															}
-															XmlNode xmlListy = candidates.SelectSingleNode("/listy");
-															foreach (XmlNode xmlLista in xmlListy)
-															{
-																foreach (XmlNode xmlPerson in xmlLista)
+																string strKand;
+																if (xmlSaveField.Name.Substring(0, 11) == "Kandydtat_L")
 																{
-																	if (xmlPerson.Attributes["id_kand"].InnerText == xmlField.Attributes["id_kand"].InnerText)
+																	strKand = xmlSaveField.Name.Substring(0, 13);
+																	if (strKand.Substring(12, 1) == "_")
 																	{
-																		idxCand2++;
-																		row.ReplaceText("<kandydat_lp>", idxCand2 + ".", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																		row.ReplaceText("<kandydat_nazwisko_imie>", string.Concat(new string[]
+																		strKand = xmlSaveField.Name.Substring(0, 12);
+																	}
+																}
+																else
+																{
+																	strKand = "kandydat";
+																}
+																System.Collections.Generic.List<int> ii = rowNew2.FindAll("<" + strKand + "_g");
+																int iiCount = ii.Count;
+																int ffCount = xmlSaveField.InnerText.Length;
+																int xx = 2;
+																if (iiCount > 1)
+																{
+																	if (ffCount > 0)
+																	{
+																		rowNew2.ReplaceText("<" + strKand + "_g>", xmlSaveField.InnerText.Substring(ffCount - 1, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+																	}
+																	else
+																	{
+																		rowNew2.ReplaceText("<" + strKand + "_g>", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+																	}
+																	for (int jj = ffCount - 2; jj >= 0; jj--)
+																	{
+																		if (ffCount > 0)
 																		{
-																			xmlPerson.Attributes["nazwisko"].InnerText.ToUpper(),
-																			" ",
-																			xmlPerson.Attributes["imie1"].InnerText,
-																			" ",
-																			xmlPerson.Attributes["imie2"].InnerText
-																		}), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																		if (xmlPerson.Attributes["kdt_plec"].InnerText == "K")
-																		{
-																			row.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszona przez " + xmlLista.Attributes["oznaczenie_listy"].InnerText + ", Lista nr. " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+																			rowNew2.ReplaceText(string.Concat(new object[]
+																			{
+																				"<",
+																				strKand,
+																				"_g*",
+																				xx,
+																				">"
+																			}), xmlSaveField.InnerText.Substring(jj, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																		}
 																		else
 																		{
-																			row.ReplaceText("<kandydat_zgloszony_przez>", "zgłoszony przez " + xmlLista.Attributes["oznaczenie_listy"].InnerText + ", Lista nr. " + xmlLista.Attributes["nrlisty"].InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+																			rowNew2.ReplaceText(string.Concat(new object[]
+																			{
+																				"<",
+																				strKand,
+																				"_g*",
+																				xx,
+																				">"
+																			}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																		}
-																		string fraza = "";
-																		System.Collections.Generic.List<int> ii = row.FindAll("<kandydat_g");
-																		if (ii.Count > 0)
-																		{
-																			fraza = "<kandydat_g";
-																		}
-																		int iiCount = ii.Count;
-																		int ffCount = xmlField.InnerText.Length;
-																		int xx = 2;
-																		if (iiCount > 1)
+																		xx++;
+																	}
+																	if (ffCount < iiCount)
+																	{
+																		for (int kk = ffCount; kk <= iiCount; kk++)
 																		{
 																			if (ffCount > 0)
 																			{
-																				row.ReplaceText(fraza + ">", xmlField.InnerText.Substring(ffCount - 1, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
+																				rowNew2.ReplaceText(string.Concat(new object[]
+																				{
+																					"<",
+																					strKand,
+																					"_g*",
+																					kk,
+																					">"
+																				}), "*", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																			}
 																			else
 																			{
-																				row.ReplaceText(fraza + ">", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																			}
-																			for (int jj = ffCount - 2; jj >= 0; jj--)
-																			{
-																				if (ffCount > 0)
+																				rowNew2.ReplaceText(string.Concat(new object[]
 																				{
-																					row.ReplaceText(string.Concat(new object[]
-																					{
-																						fraza,
-																						"*",
-																						xx,
-																						">"
-																					}), xmlField.InnerText.Substring(jj, 1), false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																				}
-																				else
-																				{
-																					row.ReplaceText(string.Concat(new object[]
-																					{
-																						fraza,
-																						"*",
-																						xx,
-																						">"
-																					}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																				}
-																				xx++;
+																					"<",
+																					strKand,
+																					"_g*",
+																					kk,
+																					">"
+																				}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																			}
-																			if (ffCount < iiCount)
-																			{
-																				for (int kk = ffCount; kk <= iiCount; kk++)
-																				{
-																					if (ffCount > 0)
-																					{
-																						row.ReplaceText(string.Concat(new object[]
-																						{
-																							fraza,
-																							"*",
-																							kk,
-																							">"
-																						}), "*", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																					}
-																					else
-																					{
-																						row.ReplaceText(string.Concat(new object[]
-																						{
-																							fraza,
-																							"*",
-																							kk,
-																							">"
-																						}), "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
-																					}
-																				}
-																			}
-																		}
-																		if (iiCount == 1)
-																		{
-																			row.ReplaceText(fraza + ">", xmlField.InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																		}
 																	}
+																}
+																if (iiCount == 1)
+																{
+																	rowNew2.ReplaceText("<" + strKand + "_g>", xmlSaveField.InnerText, false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 																}
 															}
 														}
@@ -988,10 +1030,21 @@ namespace Kalkulator1
 							}
 						}
 					}
+					finally
+					{
+						System.IDisposable disposable = enumerator as System.IDisposable;
+						if (disposable != null)
+						{
+							disposable.Dispose();
+						}
+					}
+					docTemplate.SaveAs(this.newFile);
 				}
+			}
+			using (DocX docTemplate = DocX.Load(this.newFile))
+			{
 				foreach (Novacode.Table table in docTemplate.Tables)
 				{
-					int idxCand3 = 0;
 					foreach (Row row in table.Rows)
 					{
 						if (row.Cells.Count > 1)
@@ -1001,7 +1054,6 @@ namespace Kalkulator1
 								row.Remove();
 							}
 						}
-						idxCand3++;
 					}
 				}
 				docTemplate.ReplaceText("<field_3_14>", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
@@ -1026,7 +1078,7 @@ namespace Kalkulator1
 				{
 					docTemplate.ReplaceText("<control_sum>", "", false, System.Text.RegularExpressions.RegexOptions.None, null, null, MatchFormattingOptions.SubsetMatch);
 				}
-				docTemplate.SaveAs(this.newFile);
+				docTemplate.Save();
 			}
 			if (isWielopak)
 			{

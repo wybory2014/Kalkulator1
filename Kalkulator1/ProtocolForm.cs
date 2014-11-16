@@ -5,6 +5,7 @@ using Kalkulator1.ResponseClass;
 using Kalkulator1.validation;
 using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,6 +38,7 @@ namespace Kalkulator1
 		private string inst = "";
 		private string okreg = "";
 		private string instJNS = "";
+		private string xmlKandydaci;
 		private string typeObw;
 		private bool correspondence;
 		private string lwyb = "";
@@ -161,6 +163,7 @@ namespace Kalkulator1
 			this.typeValidation = new System.Collections.Generic.Dictionary<string, string>();
 			this.codeBarText = "";
 			this.codeBarCode = "";
+			this.xmlKandydaci = "";
 		}
 		public ProtocolForm(ProtocolsList form, XmlDocument header, string protocolDefinition, string candidates, string committee, string validateDefinition, string save, string OU, string licensePath, string version)
 		{
@@ -170,6 +173,7 @@ namespace Kalkulator1
 			this.isKLK = true;
 			this.isKLKPro = true;
 			this.isKLKWali = true;
+			this.xmlKandydaci = "";
 			this.version = version;
 			this.licensePath = licensePath;
 			this.path = System.IO.Path.GetTempPath() + "KBW";
@@ -759,6 +763,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</form>";
 					xml += "<komisja_sklad";
 					XmlNode nodesList = this.committee.SelectSingleNode("/komisja_sklad");
@@ -888,6 +893,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += " <status>roboczy</status>";
 				}
@@ -932,6 +938,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += "<step2>";
 					foreach (Control c in this.Form2panel.Controls)
@@ -972,6 +979,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step2>";
 					xml += "<status>roboczy</status>";
 				}
@@ -1016,6 +1024,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += "<step2>";
 					foreach (Control c in this.Form2panel.Controls)
@@ -1056,6 +1065,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step2>";
 					xml += "<step3>";
 					foreach (Control c in this.SummationPanel.Controls)
@@ -1096,6 +1106,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step3>";
 					xml += this.validateExportedXmlS(3);
 					xml += "<status>roboczy</status>";
@@ -1336,6 +1347,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</form>";
 					xml += "<komisja_sklad";
 					XmlNode nodesList = this.committee.SelectSingleNode("/komisja_sklad");
@@ -1465,6 +1477,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += " <status>roboczy</status>";
 				}
@@ -1509,6 +1522,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += "<step2>";
 					foreach (Control c in this.Form2panel.Controls)
@@ -1549,6 +1563,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step2>";
 					xml += "<status>roboczy</status>";
 				}
@@ -1906,6 +1921,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</form>";
 					xml += "<komisja_sklad";
 					XmlNode nodesList = this.committee.SelectSingleNode("/komisja_sklad");
@@ -2033,6 +2049,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += " <status>roboczy</status>";
 				}
@@ -2077,6 +2094,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += "<step2>";
 					foreach (Control c in this.Form2panel.Controls)
@@ -2117,6 +2135,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step2>";
 					xml += "<status>roboczy</status>";
 				}
@@ -2161,6 +2180,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step1>";
 					xml += "<step2>";
 					foreach (Control c in this.Form2panel.Controls)
@@ -2201,6 +2221,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step2>";
 					xml += "<step3>";
 					foreach (Control c in this.SummationPanel.Controls)
@@ -2241,6 +2262,7 @@ namespace Kalkulator1
 							}
 						}
 					}
+					xml = xml + "<skresleni>" + this.xmlKandydaci + "</skresleni>";
 					xml += "</step3>";
 					xml += "<status>roboczy</status>";
 					if (this.codeWarning != "")
@@ -2310,7 +2332,11 @@ namespace Kalkulator1
 			{
 				if (base.ActiveControl.Text != "")
 				{
-					if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Return)
+					if (e.KeyCode == Keys.Down)
+					{
+						ctl.SelectNextControl(base.ActiveControl, true, true, true, true);
+					}
+					if (e.KeyCode == Keys.Return && this.protocolSummation.BackColor != System.Drawing.SystemColors.GradientInactiveCaption)
 					{
 						ctl.SelectNextControl(base.ActiveControl, true, true, true, true);
 					}
@@ -2333,10 +2359,14 @@ namespace Kalkulator1
 					}
 					else
 					{
-						if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Return)
+						if (e.KeyCode == Keys.Up)
 						{
 							ctl.SelectNextControl(base.ActiveControl, true, true, true, true);
 						}
+					}
+					if (e.KeyCode == Keys.Return && this.protocolSummation.BackColor != System.Drawing.SystemColors.GradientInactiveCaption)
+					{
+						ctl.SelectNextControl(base.ActiveControl, true, true, true, true);
 					}
 				}
 			}
@@ -3118,7 +3148,7 @@ namespace Kalkulator1
 						foreach (XmlNode ins in s2)
 						{
 							XmlNode kod = ins.Attributes.GetNamedItem("kod");
-							if (kod != null && kod.Value == this.inst)
+							if (kod != null && kod.Value == this.inst && ins.Attributes["inst_jns"].Value == this.instJNS)
 							{
 								XmlNode nakladXML = ins.Attributes.GetNamedItem("naklad");
 								if (nakladXML != null && System.Text.RegularExpressions.Regex.IsMatch(nakladXML.Value, "^[0-9]{1,3}$"))
@@ -3360,6 +3390,7 @@ namespace Kalkulator1
 									bool enab = true;
 									XmlNode cor = field.Attributes.GetNamedItem("correspondence");
 									XmlNode corValue = field.Attributes.GetNamedItem("elseCorrespondenceDefault");
+									System.Collections.IEnumerator enumerator3;
 									if (cor != null)
 									{
 										if ((cor.Value.ToLower() == "false" && this.correspondence) || (cor.Value.ToLower() == "true" && !this.correspondence))
@@ -3367,7 +3398,50 @@ namespace Kalkulator1
 											enab = false;
 											if (corValue != null)
 											{
-												valueText = corValue.Value;
+												string value = corValue.Value;
+												if (value == "pakiet")
+												{
+													XmlNode headerRoot = this.header.SelectSingleNode("/akcja_wyborcza/jns");
+													enumerator3 = headerRoot.GetEnumerator();
+													try
+													{
+														while (enumerator3.MoveNext())
+														{
+															XmlNode obw = (XmlNode)enumerator3.Current;
+															if (obw.Name == "obw" && obw.Attributes.GetNamedItem("nr") != null && obw.Attributes.GetNamedItem("nr").Value == obwod)
+															{
+																foreach (XmlNode institutions in obw)
+																{
+																	if (institutions.Name == "inst" && institutions.Attributes.GetNamedItem("kod") != null && institutions.Attributes.GetNamedItem("kod").Value == inst && institutions.Attributes.GetNamedItem("inst_jns") != null && institutions.Attributes.GetNamedItem("inst_jns").Value == this.instJNS)
+																	{
+																		foreach (XmlNode okr in institutions)
+																		{
+																			if (okr.Name == "okr" && okr.Attributes.GetNamedItem("nr") != null && okr.Attributes.GetNamedItem("nr").Value == okreg)
+																			{
+																				if (okr.Attributes.GetNamedItem("koresp") != null)
+																				{
+																					valueText = okr.Attributes.GetNamedItem("koresp").Value;
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+													finally
+													{
+														System.IDisposable disposable = enumerator3 as System.IDisposable;
+														if (disposable != null)
+														{
+															disposable.Dispose();
+														}
+													}
+												}
+												else
+												{
+													valueText = corValue.Value;
+												}
 											}
 										}
 									}
@@ -3403,66 +3477,79 @@ namespace Kalkulator1
 									x = 10;
 									Label lab = new Label();
 									TextBox inputNum = new TextBox();
-									foreach (XmlNode node in field)
+									enumerator3 = field.GetEnumerator();
+									try
 									{
-										if (node.Name == "name")
+										while (enumerator3.MoveNext())
 										{
-											lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " " + node.InnerText;
-											lab.AutoSize = true;
-											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
-											lab.Font = new System.Drawing.Font(this.myfont, 9f);
-											lab.Location = new System.Drawing.Point(x, y);
-											x = widthLine - 95;
+											XmlNode node = (XmlNode)enumerator3.Current;
+											if (node.Name == "name")
+											{
+												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " " + node.InnerText;
+												lab.AutoSize = true;
+												lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
+												lab.Font = new System.Drawing.Font(this.myfont, 9f);
+												lab.Location = new System.Drawing.Point(x, y);
+												x = widthLine - 95;
+											}
+											if (node.Name == "save_as")
+											{
+												inputNum.Size = new System.Drawing.Size(85, 20);
+												inputNum.Name = node.InnerText;
+												inputNum.Enabled = enab;
+												inputNum.Text = valueText;
+												XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
+												if (value2 != null && enab)
+												{
+													inputNum.Text = value2.InnerText;
+												}
+												inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
+												inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+												inputNum.Location = new System.Drawing.Point(x, y);
+												inputNum.CausesValidation = true;
+												XmlNode valid = node.ParentNode.Attributes.GetNamedItem("data");
+												if (valid != null && valid.Value == "number")
+												{
+													inputNum.Validated += new System.EventHandler(this.number_Validated);
+													try
+													{
+														this.typeValidation.Add(inputNum.Name, "number");
+													}
+													catch (System.ArgumentException)
+													{
+													}
+												}
+												if (valid != null && valid.Value == "text")
+												{
+													inputNum.Validated += new System.EventHandler(this.number_Validated);
+													try
+													{
+														this.typeValidation.Add(inputNum.Name, "text");
+													}
+													catch (System.ArgumentException)
+													{
+													}
+												}
+												lab.Name = "Lab_" + node.InnerText;
+												XmlNode min = node.ParentNode.Attributes.GetNamedItem("min");
+												XmlNode max = node.ParentNode.Attributes.GetNamedItem("max");
+												if (min != null && max != null)
+												{
+													this.range.Add(inputNum.Name, new ValidationRange(inputNum.Name, System.Convert.ToInt32(min.Value), System.Convert.ToInt32(max.Value)));
+												}
+												if (min != null && max == null)
+												{
+													this.range.Add(inputNum.Name, new ValidationRange(inputNum.Name, System.Convert.ToInt32(min.Value)));
+												}
+											}
 										}
-										if (node.Name == "save_as")
+									}
+									finally
+									{
+										System.IDisposable disposable = enumerator3 as System.IDisposable;
+										if (disposable != null)
 										{
-											inputNum.Size = new System.Drawing.Size(85, 20);
-											inputNum.Name = node.InnerText;
-											inputNum.Enabled = enab;
-											inputNum.Text = valueText;
-											XmlNode value = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
-											if (value != null && enab)
-											{
-												inputNum.Text = value.InnerText;
-											}
-											inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
-											inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-											inputNum.Location = new System.Drawing.Point(x, y);
-											inputNum.CausesValidation = true;
-											XmlNode valid = node.ParentNode.Attributes.GetNamedItem("data");
-											if (valid != null && valid.Value == "number")
-											{
-												inputNum.Validated += new System.EventHandler(this.number_Validated);
-												try
-												{
-													this.typeValidation.Add(inputNum.Name, "number");
-												}
-												catch (System.ArgumentException)
-												{
-												}
-											}
-											if (valid != null && valid.Value == "text")
-											{
-												inputNum.Validated += new System.EventHandler(this.number_Validated);
-												try
-												{
-													this.typeValidation.Add(inputNum.Name, "text");
-												}
-												catch (System.ArgumentException)
-												{
-												}
-											}
-											lab.Name = "Lab_" + node.InnerText;
-											XmlNode min = node.ParentNode.Attributes.GetNamedItem("min");
-											XmlNode max = node.ParentNode.Attributes.GetNamedItem("max");
-											if (min != null && max != null)
-											{
-												this.range.Add(inputNum.Name, new ValidationRange(inputNum.Name, System.Convert.ToInt32(min.Value), System.Convert.ToInt32(max.Value)));
-											}
-											if (min != null && max == null)
-											{
-												this.range.Add(inputNum.Name, new ValidationRange(inputNum.Name, System.Convert.ToInt32(min.Value)));
-											}
+											disposable.Dispose();
 										}
 									}
 									this.Form1panel.Controls.Add(lab);
@@ -3532,8 +3619,10 @@ namespace Kalkulator1
 											patternField = this.readPatternCandidate(node, patternField);
 											int save_as_candidate = 1;
 											string idcandidate = "";
+											int countListaItem = 0;
 											foreach (XmlNode lista in candidatesRoot)
 											{
+												countListaItem++;
 												Label lab = new Label();
 												TextBox inputNum = new TextBox();
 												string statustTMP = "A";
@@ -3744,10 +3833,10 @@ namespace Kalkulator1
 															catch (System.ArgumentException)
 															{
 															}
-															XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-															if (value != null)
+															XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+															if (value2 != null)
 															{
-																inputNum.Text = value.InnerText;
+																inputNum.Text = value2.InnerText;
 															}
 															if (!(patternField[i].getDisplay().ToLower() == "false"))
 															{
@@ -3769,6 +3858,41 @@ namespace Kalkulator1
 															{
 															}
 															this.candidatesRule[inputNum.Name] = idcandidate;
+															idcandidate = "";
+														}
+													}
+													if (status == "S")
+													{
+														if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+														{
+															if (lista.FirstChild.Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+															{
+																idcandidate = lista.FirstChild.Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+															}
+														}
+														else
+														{
+															string label = patternField[i].getIdCandidate().Replace("parent:", "");
+															if (lista.Attributes.GetNamedItem(label) != null)
+															{
+																idcandidate = lista.Attributes.GetNamedItem(label).Value;
+															}
+														}
+														if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+														{
+															string name3 = patternField[i].getSave().Replace("X", "S" + countListaItem.ToString());
+															string text2 = this.xmlKandydaci;
+															this.xmlKandydaci = string.Concat(new string[]
+															{
+																text2,
+																"<",
+																name3,
+																" id_kand=\"",
+																idcandidate,
+																"\">X</",
+																name3,
+																">"
+															});
 															idcandidate = "";
 														}
 													}
@@ -3815,10 +3939,10 @@ namespace Kalkulator1
 													catch (System.ArgumentException)
 													{
 													}
-													XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-													if (value != null)
+													XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+													if (value2 != null)
 													{
-														inputNum.Text = value.InnerText;
+														inputNum.Text = value2.InnerText;
 													}
 													this.Form1panel.Controls.Add(inputNum);
 													if (lab.Height > 20)
@@ -3918,10 +4042,10 @@ namespace Kalkulator1
 																inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
 																inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
 																inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-																XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																if (value != null)
+																XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																if (value2 != null)
 																{
-																	inputNum.Text = value.InnerText;
+																	inputNum.Text = value2.InnerText;
 																}
 																inputNum.Location = new System.Drawing.Point(x, y);
 																inputNum.Validated += new System.EventHandler(this.number_Validated);
@@ -3929,14 +4053,14 @@ namespace Kalkulator1
 																{
 																	this.typeValidation.Add(inputNum.Name, "number");
 																}
-																catch (System.Exception ex_2184)
+																catch (System.Exception ex_25E6)
 																{
 																}
 																try
 																{
 																	this.Form1panel.Controls.Add(inputNum);
 																}
-																catch (System.Exception ex_2184)
+																catch (System.Exception ex_25E6)
 																{
 																}
 																if (lab.Height > 20)
@@ -4143,10 +4267,10 @@ namespace Kalkulator1
 																		inputNum.Size = new System.Drawing.Size(85, 20);
 																		string nameFI = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
 																		inputNum.Name = nameFI;
-																		XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																		if (value != null)
+																		XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																		if (value2 != null)
 																		{
-																			inputNum.Text = value.InnerText;
+																			inputNum.Text = value2.InnerText;
 																		}
 																		inputNum.Location = new System.Drawing.Point(x, y);
 																		inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
@@ -4185,6 +4309,41 @@ namespace Kalkulator1
 																		{
 																		}
 																		this.candidatesRule[inputNum.Name] = idcandidate;
+																		idcandidate = "";
+																	}
+																}
+																if (status == "S")
+																{
+																	if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																	{
+																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																		{
+																			idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																		}
+																	}
+																	else
+																	{
+																		string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																		if (lista.Attributes.GetNamedItem(label) != null)
+																		{
+																			idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																		}
+																	}
+																	if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																	{
+																		string name3 = patternField[i].getSave().Replace("X", "S" + j.ToString()).Replace("Y", nrListy.ToString());
+																		string text2 = this.xmlKandydaci;
+																		this.xmlKandydaci = string.Concat(new string[]
+																		{
+																			text2,
+																			"<",
+																			name3,
+																			" id_kand=\"",
+																			idcandidate,
+																			"\">X</",
+																			name3,
+																			">"
+																		});
 																		idcandidate = "";
 																	}
 																}
@@ -4424,8 +4583,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_3AAD = lab;
-											expr_3AAD.Text += node.InnerText;
+											Label expr_40F3 = lab;
+											expr_40F3.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
@@ -4468,10 +4627,10 @@ namespace Kalkulator1
 											{
 												inputNum.Text = valueText;
 											}
-											XmlNode value = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
-											if (value != null)
+											XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
+											if (value2 != null)
 											{
-												inputNum.Text = value.InnerText;
+												inputNum.Text = value2.InnerText;
 											}
 											inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
 											inputNum.LostFocus += new System.EventHandler(this.LostFocus);
@@ -4659,6 +4818,7 @@ namespace Kalkulator1
 									bool enab = true;
 									XmlNode cor = field.Attributes.GetNamedItem("correspondence");
 									XmlNode corValue = field.Attributes.GetNamedItem("elseCorrespondenceDefault");
+									System.Collections.IEnumerator enumerator3;
 									if (cor != null)
 									{
 										if ((cor.Value.ToLower() == "false" && this.correspondence) || (cor.Value.ToLower() == "true" && !this.correspondence))
@@ -4666,7 +4826,89 @@ namespace Kalkulator1
 											enab = false;
 											if (corValue != null)
 											{
-												valueText = corValue.Value;
+												string value = corValue.Value;
+												if (value == "pakiet")
+												{
+													XmlNode headerRoot = this.header.SelectSingleNode("/akcja_wyborcza/jns");
+													enumerator3 = headerRoot.GetEnumerator();
+													try
+													{
+														while (enumerator3.MoveNext())
+														{
+															XmlNode obw = (XmlNode)enumerator3.Current;
+															if (obw.Name == "obw" && obw.Attributes.GetNamedItem("nr") != null && obw.Attributes.GetNamedItem("nr").Value == obwod)
+															{
+																foreach (XmlNode institutions in obw)
+																{
+																	if (institutions.Name == "inst" && institutions.Attributes.GetNamedItem("kod") != null && institutions.Attributes.GetNamedItem("kod").Value == inst && institutions.Attributes.GetNamedItem("inst_jns") != null && institutions.Attributes.GetNamedItem("inst_jns").Value == this.instJNS)
+																	{
+																		foreach (XmlNode okr in institutions)
+																		{
+																			if (okr.Name == "okr" && okr.Attributes.GetNamedItem("nr") != null && okr.Attributes.GetNamedItem("nr").Value == okreg)
+																			{
+																				if (okr.Attributes.GetNamedItem("koresp") != null)
+																				{
+																					valueText = okr.Attributes.GetNamedItem("koresp").Value;
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+													finally
+													{
+														System.IDisposable disposable = enumerator3 as System.IDisposable;
+														if (disposable != null)
+														{
+															disposable.Dispose();
+														}
+													}
+												}
+												else
+												{
+													valueText = corValue.Value;
+												}
+											}
+										}
+										if (valueText == "pakiet")
+										{
+											XmlNode headerRoot = this.header.SelectSingleNode("/akcja_wyborcza/jns");
+											enumerator3 = headerRoot.GetEnumerator();
+											try
+											{
+												while (enumerator3.MoveNext())
+												{
+													XmlNode obw = (XmlNode)enumerator3.Current;
+													if (obw.Name == "obw" && obw.Attributes.GetNamedItem("nr") != null && obw.Attributes.GetNamedItem("nr").Value == obwod)
+													{
+														foreach (XmlNode institutions in obw)
+														{
+															if (institutions.Name == "inst" && institutions.Attributes.GetNamedItem("kod") != null && institutions.Attributes.GetNamedItem("kod").Value == inst && institutions.Attributes.GetNamedItem("inst_jns") != null && institutions.Attributes.GetNamedItem("inst_jns").Value == this.instJNS)
+															{
+																foreach (XmlNode okr in institutions)
+																{
+																	if (okr.Name == "okr" && okr.Attributes.GetNamedItem("nr") != null && okr.Attributes.GetNamedItem("nr").Value == okreg)
+																	{
+																		if (okr.Attributes.GetNamedItem("koresp") != null)
+																		{
+																			valueText = okr.Attributes.GetNamedItem("koresp").Value;
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+											finally
+											{
+												System.IDisposable disposable = enumerator3 as System.IDisposable;
+												if (disposable != null)
+												{
+													disposable.Dispose();
+												}
 											}
 										}
 									}
@@ -4702,40 +4944,53 @@ namespace Kalkulator1
 									x = 10;
 									Label lab = new Label();
 									TextBox inputNum = new TextBox();
-									foreach (XmlNode node in field)
+									enumerator3 = field.GetEnumerator();
+									try
 									{
-										if (node.Name == "name")
+										while (enumerator3.MoveNext())
 										{
-											lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " " + node.InnerText;
-											lab.AutoSize = true;
-											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
-											lab.Font = new System.Drawing.Font(this.myfont, 9f);
-											lab.Location = new System.Drawing.Point(x, y);
-											x = widthLine - 95;
+											XmlNode node = (XmlNode)enumerator3.Current;
+											if (node.Name == "name")
+											{
+												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " " + node.InnerText;
+												lab.AutoSize = true;
+												lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
+												lab.Font = new System.Drawing.Font(this.myfont, 9f);
+												lab.Location = new System.Drawing.Point(x, y);
+												x = widthLine - 95;
+											}
+											if (node.Name == "save_as")
+											{
+												inputNum.Size = new System.Drawing.Size(85, 20);
+												inputNum.Name = node.InnerText;
+												inputNum.Location = new System.Drawing.Point(x, y);
+												inputNum.MouseClick += new MouseEventHandler(this.Control_S2_MouseClick);
+												inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+												inputNum.CausesValidation = true;
+												inputNum.TabIndex = count;
+												count--;
+												inputNum.Enabled = enab;
+												inputNum.Text = valueText;
+												XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+												if (value2 != null && enab)
+												{
+													inputNum.Text = value2.InnerText;
+												}
+												XmlNode valid = node.ParentNode.Attributes.GetNamedItem("data");
+												if (valid != null && valid.Value == "number")
+												{
+													inputNum.Validated += new System.EventHandler(this.number_Validated);
+												}
+												lab.Name = "Lab_" + node.InnerText;
+											}
 										}
-										if (node.Name == "save_as")
+									}
+									finally
+									{
+										System.IDisposable disposable = enumerator3 as System.IDisposable;
+										if (disposable != null)
 										{
-											inputNum.Size = new System.Drawing.Size(85, 20);
-											inputNum.Name = node.InnerText;
-											inputNum.Location = new System.Drawing.Point(x, y);
-											inputNum.MouseClick += new MouseEventHandler(this.Control_S2_MouseClick);
-											inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-											inputNum.CausesValidation = true;
-											inputNum.TabIndex = count;
-											count--;
-											inputNum.Enabled = enab;
-											inputNum.Text = valueText;
-											XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-											if (value != null && enab)
-											{
-												inputNum.Text = value.InnerText;
-											}
-											XmlNode valid = node.ParentNode.Attributes.GetNamedItem("data");
-											if (valid != null && valid.Value == "number")
-											{
-												inputNum.Validated += new System.EventHandler(this.number_Validated);
-											}
-											lab.Name = "Lab_" + node.InnerText;
+											disposable.Dispose();
 										}
 									}
 									this.Form2panel.Controls.Add(lab);
@@ -5012,10 +5267,10 @@ namespace Kalkulator1
 															inputNum.Validated += new System.EventHandler(this.number_Validated);
 															inputNum.TabIndex = count;
 															count--;
-															XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-															if (value != null)
+															XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+															if (value2 != null)
 															{
-																inputNum.Text = value.InnerText;
+																inputNum.Text = value2.InnerText;
 															}
 															if (!(patternField[i].getDisplay().ToLower() == "false"))
 															{
@@ -5071,10 +5326,10 @@ namespace Kalkulator1
 													inputNum.Validated += new System.EventHandler(this.number_Validated);
 													inputNum.TabIndex = count;
 													count--;
-													XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-													if (value != null)
+													XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+													if (value2 != null)
 													{
-														inputNum.Text = value.InnerText;
+														inputNum.Text = value2.InnerText;
 													}
 													this.Form2panel.Controls.Add(inputNum);
 													if (lab.Height > 20)
@@ -5169,10 +5424,10 @@ namespace Kalkulator1
 																inputNum.TabIndex = count;
 																count--;
 																inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
-																XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																if (value != null)
+																XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																if (value2 != null)
 																{
-																	inputNum.Text = value.InnerText;
+																	inputNum.Text = value2.InnerText;
 																}
 																inputNum.Location = new System.Drawing.Point(x, y);
 																inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
@@ -5375,10 +5630,10 @@ namespace Kalkulator1
 																	{
 																		inputNum.Size = new System.Drawing.Size(85, 20);
 																		inputNum.Name = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
-																		XmlNode value = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																		if (value != null)
+																		XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																		if (value2 != null)
 																		{
-																			inputNum.Text = value.InnerText;
+																			inputNum.Text = value2.InnerText;
 																		}
 																		inputNum.Location = new System.Drawing.Point(x, y);
 																		inputNum.TabIndex = count;
@@ -5638,8 +5893,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_38B5 = lab;
-											expr_38B5.Text += node.InnerText;
+											Label expr_3DC5 = lab;
+											expr_3DC5.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
@@ -5683,10 +5938,10 @@ namespace Kalkulator1
 												inputNum.Text = valueText;
 											}
 											inputNum.Enabled = enab;
-											XmlNode value = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
-											if (value != null)
+											XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + node.InnerText);
+											if (value2 != null)
 											{
-												inputNum.Text = value.InnerText;
+												inputNum.Text = value2.InnerText;
 											}
 											inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
 											inputNum.LostFocus += new System.EventHandler(this.LostFocus);
@@ -6850,16 +7105,20 @@ namespace Kalkulator1
 		{
 			if (this.currentStep >= 3 || this.currentStep == 0)
 			{
-				this.edit();
-				this.currentStep = 1;
-				this.buttonNext.Text = "Dalej";
-				this.buttonNext.Click -= new System.EventHandler(this.protocolForm2_Click);
-				this.buttonNext.Click -= new System.EventHandler(this.protocolSummation_Click);
-				this.buttonNext.Click -= new System.EventHandler(this.committee_Click);
-				this.buttonNext.Click -= new System.EventHandler(this.committeeValid_Click);
-				this.buttonNext.Click -= new System.EventHandler(this.signProtocol_Click);
-				this.buttonNext.Click += new System.EventHandler(this.protocolForm2_Click);
-				this.buttonNext.Enabled = true;
+				bool go = this.edit();
+				if (go)
+				{
+					this.currentStep = 1;
+					this.buttonNext.Text = "Dalej";
+					this.buttonNext.Click -= new System.EventHandler(this.protocolForm2_Click);
+					this.buttonNext.Click -= new System.EventHandler(this.protocolSummation_Click);
+					this.buttonNext.Click -= new System.EventHandler(this.committee_Click);
+					this.buttonNext.Click -= new System.EventHandler(this.committeeValid_Click);
+					this.buttonNext.Click -= new System.EventHandler(this.signProtocol_Click);
+					this.buttonNext.Click += new System.EventHandler(this.protocolForm2_Click);
+					this.buttonNext.Enabled = true;
+					this.bottomPanel.Location = new System.Drawing.Point(this.Form1panel.Location.X, this.Form1panel.Location.Y + this.Form1panel.Size.Height);
+				}
 			}
 			else
 			{
@@ -6931,7 +7190,7 @@ namespace Kalkulator1
 				{
 					this.lastValidation(this.Form1panel);
 				}
-				catch (System.Exception ex_AE)
+				catch (System.Exception ex_B0)
 				{
 				}
 				this.wait.setVisible(false);
@@ -6987,16 +7246,20 @@ namespace Kalkulator1
 			{
 				if (this.currentStep >= 3 || this.currentStep == 0)
 				{
-					this.edit();
-					this.currentStep = 1;
-					this.buttonNext.Text = "Dalej";
-					this.buttonNext.Click -= new System.EventHandler(this.protocolForm2_Click);
-					this.buttonNext.Click -= new System.EventHandler(this.protocolSummation_Click);
-					this.buttonNext.Click -= new System.EventHandler(this.committee_Click);
-					this.buttonNext.Click -= new System.EventHandler(this.committeeValid_Click);
-					this.buttonNext.Click -= new System.EventHandler(this.signProtocol_Click);
-					this.buttonNext.Click += new System.EventHandler(this.protocolForm2_Click);
-					this.buttonNext.Enabled = true;
+					bool go = this.edit();
+					if (go)
+					{
+						this.currentStep = 1;
+						this.buttonNext.Text = "Dalej";
+						this.buttonNext.Click -= new System.EventHandler(this.protocolForm2_Click);
+						this.buttonNext.Click -= new System.EventHandler(this.protocolSummation_Click);
+						this.buttonNext.Click -= new System.EventHandler(this.committee_Click);
+						this.buttonNext.Click -= new System.EventHandler(this.committeeValid_Click);
+						this.buttonNext.Click -= new System.EventHandler(this.signProtocol_Click);
+						this.buttonNext.Click += new System.EventHandler(this.protocolForm2_Click);
+						this.buttonNext.Enabled = true;
+						this.bottomPanel.Location = new System.Drawing.Point(this.Form2panel.Location.X, this.Form2panel.Location.Y + this.Form2panel.Size.Height);
+					}
 				}
 				else
 				{
@@ -7115,6 +7378,15 @@ namespace Kalkulator1
 					this.protocolSummation.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
 					this.protocolCommittee.BackColor = System.Drawing.SystemColors.Control;
 					this.signProtocol.BackColor = System.Drawing.SystemColors.Control;
+					if (this.errorProvider1.hasHardWarning())
+					{
+						this.raportPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
+						this.bottomPanel.Location = new System.Drawing.Point(this.raportPanel.Location.X, this.raportPanel.Location.Y + this.raportPanel.Size.Height);
+					}
+					else
+					{
+						this.bottomPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
+					}
 				}
 				else
 				{
@@ -7154,7 +7426,15 @@ namespace Kalkulator1
 					this.buttonNext.Enabled = true;
 				}
 				this.setFirstFocus(this.SummationPanel);
-				this.bottomPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height);
+				if (this.errorProvider1.hasHardWarning())
+				{
+					this.raportPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
+					this.bottomPanel.Location = new System.Drawing.Point(this.raportPanel.Location.X, this.raportPanel.Location.Y + this.raportPanel.Size.Height);
+				}
+				else
+				{
+					this.bottomPanel.Location = new System.Drawing.Point(this.SummationPanel.Location.X, this.SummationPanel.Location.Y + this.SummationPanel.Size.Height + 50);
+				}
 			}
 			this.saves(this.currentStep);
 		}
@@ -7242,6 +7522,7 @@ namespace Kalkulator1
 							this.buttonNext.Click -= new System.EventHandler(this.committeeValid_Click);
 							this.buttonNext.Click -= new System.EventHandler(this.signProtocol_Click);
 							this.buttonNext.Click += new System.EventHandler(this.committeeValid_Click);
+							this.bottomPanel.Location = new System.Drawing.Point(this.committeePanel.Location.X, this.committeePanel.Location.Y + this.committeePanel.Size.Height);
 							this.setFirstFocus(this.committeePanel);
 							this.saves(this.currentStep);
 						}
@@ -10556,7 +10837,7 @@ namespace Kalkulator1
 			this.wait.setVisible(true);
 			if (this.currentStep != 0)
 			{
-				XmlNode status = this.save.SelectSingleNode("/save/form/status");
+				XmlNode status = this.save.SelectSingleNode("/save/status");
 				if (status != null && !(status.InnerText == "podpisany") && !(status.InnerText == "wysłany"))
 				{
 					this.saves(this.currentStep);
@@ -13817,8 +14098,9 @@ namespace Kalkulator1
 				}
 			}
 		}
-		private void edit()
+		private bool edit()
 		{
+			bool result;
 			if (MessageBox.Show("Powrót do edycji tego kroku spowoduje utratę danych z kroku 3 i 4. Czy kontynuować?", "Edycja", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
 				this.saves(2);
@@ -14025,8 +14307,30 @@ namespace Kalkulator1
 				{
 					MessageBox.Show("Edytowany plik jest nieprawidłowy.");
 				}
+				this.wait.setVisible(false);
+				result = true;
 			}
-			this.wait.setVisible(false);
+			else
+			{
+				if (this.currentStep == 3)
+				{
+					this.protocolSummation.Focus();
+					this.protocolSummation.Select();
+				}
+				if (this.currentStep == 4)
+				{
+					this.protocolCommittee.Focus();
+					this.protocolCommittee.Select();
+				}
+				if (this.currentStep == 5)
+				{
+					this.signProtocol.Focus();
+					this.signProtocol.Select();
+				}
+				this.wait.setVisible(false);
+				result = false;
+			}
+			return result;
 		}
 		protected override void Dispose(bool disposing)
 		{

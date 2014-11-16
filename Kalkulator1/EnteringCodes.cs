@@ -120,10 +120,6 @@ namespace Kalkulator1
 					this.f.goodcertificate = true;
 					base.Close();
 				}
-				else
-				{
-					MessageBox.Show("Wpisany kod jest nie poprawny, spróbuj jeszcze raz", "Kounikat");
-				}
 			}
 			catch (XmlException)
 			{

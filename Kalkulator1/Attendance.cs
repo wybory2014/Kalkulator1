@@ -477,7 +477,10 @@ namespace Kalkulator1
 				(sender as ComboBox).ForeColor = System.Drawing.Color.Black;
 				(sender as ComboBox).BackColor = System.Drawing.SystemColors.Window;
 				this.errorOBW.Visible = false;
-				this.klkLwyb.Text = "(" + (this.obwodList.SelectedItem as AttendanceOBWItem).getLwyb().ToString() + ")";
+				if (this.obwodList.SelectedItem is AttendanceOBWItem)
+				{
+					this.klkLwyb.Text = "(" + (this.obwodList.SelectedItem as AttendanceOBWItem).getLwyb().ToString() + ")";
+				}
 				if (this.errorCurrentLwyb.Visible && this.errorCurrentLwyb.Text == "Do sprawdzenia tego pola wymagane jest wybranie obwodu")
 				{
 					this.currentLwyb_Validated(this.currentLwyb, e);

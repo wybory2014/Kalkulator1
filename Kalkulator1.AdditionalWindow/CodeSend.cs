@@ -41,7 +41,7 @@ namespace Kalkulator1.AdditionalWindow
 				if (logged)
 				{
 					WaitPanel panelWait = new WaitPanel("Wait_04", base.Size.Width, base.Size.Height);
-					panelWait.setWaitPanel("Trwa oczekiwanie na przyznanie kodu odblokowującego przez pełnomocnika.", "Proszę czekać");
+					panelWait.setWaitPanel("Trwa wysyłanie prośby o przyznanie kodu odblokowującego przez pełnomocnika.", "Proszę czekać");
 					panelWait.setSize(this.passwordPanel.Size);
 					panelWait.setLocation(this.passwordPanel.Location);
 					base.Controls.Add(panelWait.getPanel());
@@ -65,7 +65,7 @@ namespace Kalkulator1.AdditionalWindow
 					if (cod.getCode().getcode() == 0)
 					{
 						WaitPanel p = new WaitPanel("Wait_04", base.Size.Width, base.Size.Height);
-						p.setWaitPanel("Trwa sprawdzanie czy ostrzeżenie/a twarde zostały zaakceptowane", "Proszę czekać");
+						p.setWaitPanel("Trwa sprawdzanie czy ostrzeżenie/a twarde zostały zaakceptowane - oczekiwanie na przyznanie kodu odblokowującego przez pełnomocnika.", "Proszę czekać");
 						p.setSize(this.passwordPanel.Size);
 						p.setLocation(this.passwordPanel.Location);
 						base.Controls.Add(p.getPanel());

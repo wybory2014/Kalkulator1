@@ -69,6 +69,9 @@ namespace Kalkulator1
 		public ProtocolsList(string filepath, Start start, string licensepath, string version)
 		{
 			this.InitializeComponent();
+			this.start = start;
+			start.wait.setWaitPanel("Trwa wczytywanie protokołów", "Proszę czekać");
+			start.wait.setVisible(true);
 			this.version = version;
 			this.licensepath = licensepath;
 			this.Text = this.Text + " (" + Kalkulator1.instalClass.Version.getVersion().ToString() + ")";
@@ -113,7 +116,6 @@ namespace Kalkulator1
 			base.Controls.Add(this.wait.getPanel());
 			base.Controls[this.wait.getName()].BringToFront();
 			this.protocolsTable.CellClick += new DataGridViewCellEventHandler(this.getProtocol_CellClick);
-			this.start = start;
 			if (!System.IO.Directory.Exists(this.path + "\\electoralEampaign"))
 			{
 				try
@@ -221,10 +223,14 @@ namespace Kalkulator1
 			}
 			this.getKLK(true);
 			this.getProtocols(true);
+			start.wait.setVisible(false);
 		}
 		public ProtocolsList(string filepath, Start start, string licensepath, string version, string jnsNew, bool powiat)
 		{
 			this.InitializeComponent();
+			this.start = start;
+			start.wait.setWaitPanel("Trwa wczytywanie protokołów", "Proszę czekać");
+			start.wait.setVisible(true);
 			this.version = version;
 			this.licensepath = licensepath;
 			this.powiat = powiat;
@@ -379,6 +385,7 @@ namespace Kalkulator1
 			}
 			this.getKLK(true);
 			this.getProtocols(true);
+			start.wait.setVisible(false);
 		}
 		private void getProtocolsFromNet_Click(object sender, System.EventArgs e)
 		{
@@ -1458,7 +1465,7 @@ namespace Kalkulator1
 										this.getInstData("RDW", server2);
 										this.getInstData("RDP", server2);
 										this.getInstData("WBP", server2);
-										for (int i = 0; i < 23; i++)
+										for (int i = 1; i < 24; i++)
 										{
 											string savePathRDA = string.Concat(new object[]
 											{
@@ -1521,7 +1528,7 @@ namespace Kalkulator1
 											}
 											if (this.jns.Length == 5)
 											{
-												jnsTMP = this.jns.Substring(0, 1) + "0000";
+												jnsTMP = "0" + this.jns.Substring(0, 1) + "0000";
 											}
 											savePathRDW = string.Concat(new object[]
 											{
@@ -1580,11 +1587,11 @@ namespace Kalkulator1
 											jnsTMP = "";
 											if (this.jns.Length == 6)
 											{
-												jnsTMP = this.jns.Substring(0, 4) + "0000";
+												jnsTMP = this.jns.Substring(0, 4) + "00";
 											}
 											if (this.jns.Length == 5)
 											{
-												jnsTMP = this.jns.Substring(0, 3) + "0000";
+												jnsTMP = "0" + this.jns.Substring(0, 3) + "00";
 											}
 											savePathRDP = string.Concat(new object[]
 											{
@@ -3186,6 +3193,9 @@ namespace Kalkulator1
 		{
 			this.getProtocols(false);
 		}
+		private void lblWyszukaj_Click(object sender, System.EventArgs e)
+		{
+		}
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && this.components != null)
@@ -3212,10 +3222,9 @@ namespace Kalkulator1
 			this.panWyszukiwanie.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)this.protocolsTable).BeginInit();
 			base.SuspendLayout();
-			this.attendance.Location = new System.Drawing.Point(34, 23);
-			this.attendance.Margin = new Padding(6);
+			this.attendance.Location = new System.Drawing.Point(17, 12);
 			this.attendance.Name = "attendance";
-			this.attendance.Size = new System.Drawing.Size(320, 44);
+			this.attendance.Size = new System.Drawing.Size(160, 23);
 			this.attendance.TabIndex = 4;
 			this.attendance.Text = "Wprowadź frekwencję";
 			this.attendance.UseVisualStyleBackColor = true;
@@ -3224,9 +3233,8 @@ namespace Kalkulator1
 			this.protocolsPanel.Controls.Add(this.protocolsTable);
 			this.protocolsPanel.Dock = DockStyle.Fill;
 			this.protocolsPanel.Location = new System.Drawing.Point(0, 0);
-			this.protocolsPanel.Margin = new Padding(6);
 			this.protocolsPanel.Name = "protocolsPanel";
-			this.protocolsPanel.Size = new System.Drawing.Size(1752, 787);
+			this.protocolsPanel.Size = new System.Drawing.Size(881, 409);
 			this.protocolsPanel.TabIndex = 4;
 			this.panel1.Controls.Add(this.panWyszukiwanie);
 			this.panel1.Controls.Add(this.attendance);
@@ -3236,60 +3244,57 @@ namespace Kalkulator1
 			this.panel1.Controls.Add(this.label1);
 			this.panel1.Dock = DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Margin = new Padding(6);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1752, 121);
+			this.panel1.Size = new System.Drawing.Size(881, 63);
 			this.panel1.TabIndex = 4;
 			this.panWyszukiwanie.Controls.Add(this.lblWyszukaj);
 			this.panWyszukiwanie.Controls.Add(this.txtWyszukaj);
-			this.panWyszukiwanie.Location = new System.Drawing.Point(372, 23);
+			this.panWyszukiwanie.Location = new System.Drawing.Point(186, 12);
+			this.panWyszukiwanie.Margin = new Padding(2);
 			this.panWyszukiwanie.Name = "panWyszukiwanie";
-			this.panWyszukiwanie.Size = new System.Drawing.Size(747, 89);
+			this.panWyszukiwanie.Size = new System.Drawing.Size(374, 46);
 			this.panWyszukiwanie.TabIndex = 1;
 			this.panWyszukiwanie.Visible = false;
 			this.lblWyszukaj.AutoSize = true;
-			this.lblWyszukaj.Location = new System.Drawing.Point(39, 34);
-			this.lblWyszukaj.Margin = new Padding(6, 0, 6, 0);
+			this.lblWyszukaj.Location = new System.Drawing.Point(3, 25);
 			this.lblWyszukaj.Name = "lblWyszukaj";
-			this.lblWyszukaj.Size = new System.Drawing.Size(157, 26);
+			this.lblWyszukaj.Size = new System.Drawing.Size(141, 13);
 			this.lblWyszukaj.TabIndex = 8;
-			this.lblWyszukaj.Text = "Wyszukiwanie:";
+			this.lblWyszukaj.Text = "Wyszukiwanie po obwodzie:";
+			this.lblWyszukaj.Click += new System.EventHandler(this.lblWyszukaj_Click);
 			this.txtWyszukaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 12f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
-			this.txtWyszukaj.Location = new System.Drawing.Point(205, 22);
+			this.txtWyszukaj.Location = new System.Drawing.Point(149, 18);
+			this.txtWyszukaj.Margin = new Padding(2);
 			this.txtWyszukaj.Name = "txtWyszukaj";
-			this.txtWyszukaj.Size = new System.Drawing.Size(486, 44);
+			this.txtWyszukaj.Size = new System.Drawing.Size(215, 26);
 			this.txtWyszukaj.TabIndex = 1;
 			this.txtWyszukaj.TextAlign = HorizontalAlignment.Center;
 			this.txtWyszukaj.TextChanged += new System.EventHandler(this.txtWyszukaj_TextChanged);
-			this.button1.Location = new System.Drawing.Point(1128, 71);
-			this.button1.Margin = new Padding(6);
+			this.button1.Location = new System.Drawing.Point(564, 37);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(618, 44);
+			this.button1.Size = new System.Drawing.Size(309, 23);
 			this.button1.TabIndex = 3;
 			this.button1.Text = "Wczytaj protokół z dysku";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.wczytaj_Click);
-			this.getKlkFromDisc.Location = new System.Drawing.Point(1408, 23);
-			this.getKlkFromDisc.Margin = new Padding(6);
+			this.getKlkFromDisc.Location = new System.Drawing.Point(704, 12);
 			this.getKlkFromDisc.Name = "getKlkFromDisc";
-			this.getKlkFromDisc.Size = new System.Drawing.Size(338, 44);
+			this.getKlkFromDisc.Size = new System.Drawing.Size(169, 23);
 			this.getKlkFromDisc.TabIndex = 2;
 			this.getKlkFromDisc.Text = "Wczytaj pliki definicyjne z dysku";
 			this.getKlkFromDisc.UseVisualStyleBackColor = true;
 			this.getKlkFromDisc.Click += new System.EventHandler(this.getKlkFromDisc_Click);
-			this.getProtocolsFromNet.Location = new System.Drawing.Point(1128, 23);
-			this.getProtocolsFromNet.Margin = new Padding(6);
+			this.getProtocolsFromNet.Location = new System.Drawing.Point(564, 12);
 			this.getProtocolsFromNet.Name = "getProtocolsFromNet";
-			this.getProtocolsFromNet.Size = new System.Drawing.Size(268, 44);
+			this.getProtocolsFromNet.Size = new System.Drawing.Size(134, 23);
 			this.getProtocolsFromNet.TabIndex = 1;
 			this.getProtocolsFromNet.Text = "Aktualizuj pliki definicyjne";
 			this.getProtocolsFromNet.UseVisualStyleBackColor = true;
 			this.getProtocolsFromNet.Click += new System.EventHandler(this.getProtocolsFromNet_Click);
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(28, 81);
-			this.label1.Margin = new Padding(6, 0, 6, 0);
+			this.label1.Location = new System.Drawing.Point(14, 42);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(324, 26);
+			this.label1.Size = new System.Drawing.Size(163, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Wybierz protokół do wypełnienia";
 			this.protocolsTable.AllowUserToAddRows = false;
@@ -3297,19 +3302,17 @@ namespace Kalkulator1
 			this.protocolsTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 			this.protocolsTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 			this.protocolsTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.protocolsTable.Location = new System.Drawing.Point(34, 144);
-			this.protocolsTable.Margin = new Padding(6);
+			this.protocolsTable.Location = new System.Drawing.Point(17, 75);
 			this.protocolsTable.MultiSelect = false;
 			this.protocolsTable.Name = "protocolsTable";
 			this.protocolsTable.ReadOnly = true;
 			this.protocolsTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			this.protocolsTable.Size = new System.Drawing.Size(1694, 619);
+			this.protocolsTable.Size = new System.Drawing.Size(847, 322);
 			this.protocolsTable.TabIndex = 1;
-			base.AutoScaleDimensions = new System.Drawing.SizeF(12f, 25f);
+			base.AutoScaleDimensions = new System.Drawing.SizeF(6f, 13f);
 			base.AutoScaleMode = AutoScaleMode.Font;
-			base.ClientSize = new System.Drawing.Size(1752, 787);
+			base.ClientSize = new System.Drawing.Size(881, 409);
 			base.Controls.Add(this.protocolsPanel);
-			base.Margin = new Padding(6);
 			base.Name = "ProtocolsList";
 			base.StartPosition = FormStartPosition.CenterScreen;
 			this.Text = "Lista Protokołów";
