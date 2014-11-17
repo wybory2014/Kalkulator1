@@ -1739,7 +1739,7 @@ namespace Kalkulator1
 												{
 													inst_jns = inst_jnsXML.Value;
 												}
-												if (instkod == "RDA" && organNazwa == "m.st.")
+												if (instkod == "RDA" && (tmpJns[2] == '6' || tmpJns[2] == '7'))
 												{
 													savePath = string.Concat(new string[]
 													{

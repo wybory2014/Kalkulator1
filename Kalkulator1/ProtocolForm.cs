@@ -2465,7 +2465,7 @@ namespace Kalkulator1
 					{
 						foreach (XmlNode xInst in xObwod)
 						{
-							if (xInst.Attributes["kod"].InnerText == this.inst)
+							if (xInst.Attributes["kod"].InnerText == this.inst && xInst.Attributes["inst_jns"].InnerText == this.instJNS)
 							{
 								this.instId = xInst.Attributes["id"].InnerText;
 								foreach (XmlNode xOkreg in xInst)
@@ -4604,11 +4604,6 @@ namespace Kalkulator1
 																	save_as_candidate++;
 																}
 															}
-															this.countcandidatesoflist.Add(new int[]
-															{
-																nrListy,
-																save_as_candidate - 1
-															});
 														}
 													}
 												}
@@ -4833,8 +4828,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_4DCB = lab;
-											expr_4DCB.Text += node.InnerText;
+											Label expr_4DA7 = lab;
+											expr_4DA7.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
@@ -6164,11 +6159,6 @@ namespace Kalkulator1
 																	save_as_candidate++;
 																}
 															}
-															this.countcandidatesoflist.Add(new int[]
-															{
-																nrListy,
-																save_as_candidate - 1
-															});
 														}
 													}
 												}
@@ -6393,8 +6383,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_4A9D = lab;
-											expr_4A9D.Text += node.InnerText;
+											Label expr_4A79 = lab;
+											expr_4A79.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
