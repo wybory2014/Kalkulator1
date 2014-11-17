@@ -216,7 +216,7 @@ namespace Kalkulator1
 			this.codesPanel.AutoSize = true;
 			this.codesPanel.MaximumSize = new System.Drawing.Size(640, 0);
 			this.codesPanel.Visible = true;
-			this.show.Text = "Showaj błędy";
+			this.show.Text = "Schowaj błędy";
 			this.show.Click -= new System.EventHandler(this.show_Click);
 			this.show.Click += new System.EventHandler(this.hide_Click);
 			this.errorsList.Visible = true;

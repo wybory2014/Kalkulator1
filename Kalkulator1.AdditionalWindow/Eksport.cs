@@ -381,6 +381,22 @@ namespace Kalkulator1.AdditionalWindow
 							MessageBox.Show(cod.getText(), "Wysyłanie protokołu na serwer");
 							base.Close();
 						}
+						if (cod.getcode() == 16 || cod.getcode() == 17 || cod.getcode() == 18 || cod.getcode() == 19)
+						{
+							if (this.p != null)
+							{
+								this.p.komSend = "Protokół nie został wysłany na serwer z powodu błędu twardego.";
+								this.p.goodcertificate = false;
+								this.p.error = true;
+							}
+							if (this.p1 != null)
+							{
+								this.p1.komSend = "Protokół nie został wysłany na serwer z powodu błędu twardego.";
+								this.p1.goodcertificate = false;
+							}
+							MessageBox.Show(cod.getText(), "Wysyłanie protokołu na serwer");
+							base.Close();
+						}
 						else
 						{
 							MessageBox.Show(cod.getText(), "Wysyłanie protokołu na serwer");
@@ -451,6 +467,17 @@ namespace Kalkulator1.AdditionalWindow
 						{
 							this.p2.send = true;
 						}
+						MessageBox.Show(cod.getText(), "Wysyłanie protokołu na serwer");
+						base.Close();
+					}
+					if (cod.getcode() == 16 || cod.getcode() == 17 || cod.getcode() == 18 || cod.getcode() == 19)
+					{
+						if (this.p2 != null)
+						{
+							this.p2.send = false;
+							this.p2.erros = true;
+						}
+						MessageBox.Show(cod.getText(), "Wysyłanie protokołu na serwer");
 						base.Close();
 					}
 					else

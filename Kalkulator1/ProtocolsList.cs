@@ -33,6 +33,7 @@ namespace Kalkulator1
 		private WebBrowser web;
 		private string version;
 		public bool send;
+		public bool erros;
 		private bool powiat;
 		private string test;
 		private System.ComponentModel.IContainer components = null;
@@ -65,6 +66,7 @@ namespace Kalkulator1
 			this.electionData = new System.DateTime(2014, 8, 27, 7, 0, 0);
 			this.send = false;
 			this.powiat = false;
+			this.erros = false;
 		}
 		public ProtocolsList(string filepath, Start start, string licensepath, string version)
 		{
@@ -74,6 +76,7 @@ namespace Kalkulator1
 			start.wait.setVisible(true);
 			this.version = version;
 			this.licensepath = licensepath;
+			this.erros = false;
 			this.Text = this.Text + " (" + Kalkulator1.instalClass.Version.getVersion().ToString() + ")";
 			this.path = System.IO.Path.GetTempPath() + "KBW";
 			this.electionData = new System.DateTime(1, 1, 1, 0, 0, 0);
@@ -234,6 +237,7 @@ namespace Kalkulator1
 			this.version = version;
 			this.licensepath = licensepath;
 			this.powiat = powiat;
+			this.erros = false;
 			this.Text = this.Text + " (" + Kalkulator1.instalClass.Version.getVersion().ToString() + ")";
 			this.path = System.IO.Path.GetTempPath() + "KBW";
 			this.electionData = new System.DateTime(1, 1, 1, 0, 0, 0);
@@ -872,6 +876,8 @@ namespace Kalkulator1
 										fileXML = fileXML.Replace("<status>wysłany</status>", "<status>podpisany</status>");
 										if (this.con.IsAvailableNetworkActive())
 										{
+											this.erros = false;
+											this.send = false;
 											Eksport ex2 = new Eksport(fileXML, true, this);
 											try
 											{
@@ -887,6 +893,30 @@ namespace Kalkulator1
 												System.IO.StreamWriter sw = new System.IO.StreamWriter(save);
 												sw.Write(fileXML);
 												sw.Close();
+												this.refreshListOfProtocols();
+											}
+											if (!this.send && this.erros)
+											{
+												XmlDocument saveTmp = new XmlDocument();
+												fileXML = fileXML.Replace("<status>podpisany</status>", "<status>roboczy</status>");
+												fileXML = fileXML.Replace("<status>wysłany</status>", "<status>roboczy</status>");
+												saveTmp.LoadXml(fileXML);
+												XmlNode root = saveTmp.DocumentElement;
+												try
+												{
+													root.RemoveChild(root.SelectSingleNode("/save/codeBar"));
+												}
+												catch (System.Exception)
+												{
+												}
+												try
+												{
+													root.RemoveChild(root.SelectSingleNode("/save/Signature"));
+												}
+												catch (System.Exception)
+												{
+												}
+												saveTmp.Save(save);
 												this.refreshListOfProtocols();
 											}
 										}
@@ -958,7 +988,7 @@ namespace Kalkulator1
 					}
 				}
 			}
-			catch (System.ArgumentOutOfRangeException ex_16E9)
+			catch (System.ArgumentOutOfRangeException ex_17A7)
 			{
 			}
 			catch (System.Exception ex)
@@ -2898,6 +2928,29 @@ namespace Kalkulator1
 				this.electoralEampaignSave,
 				"-",
 				instkod,
+				"_ERR.docx"
+			});
+			if (!Start.listaPlikow.Contains(savePath))
+			{
+				uri = string.Concat(new string[]
+				{
+					server2,
+					"layout/",
+					this.electoralEampaignURL,
+					"-",
+					instkod,
+					"_ERR.docx"
+				});
+				res = this.con.getRequestKBWKlkDocx(uri, savePath, 0);
+				Start.listaPlikow.Add(savePath);
+			}
+			savePath = string.Concat(new string[]
+			{
+				this.path,
+				"\\ProtocolsDef\\",
+				this.electoralEampaignSave,
+				"-",
+				instkod,
 				"_Walidacja.xml"
 			});
 			uri = string.Concat(new string[]
@@ -3044,6 +3097,52 @@ namespace Kalkulator1
 					this.electoralEampaignSave,
 					"-",
 					instkod,
+					"_M_ERR.docx"
+				});
+				if (!Start.listaPlikow.Contains(savePath))
+				{
+					uri = string.Concat(new string[]
+					{
+						server2,
+						"layout/",
+						this.electoralEampaignURL,
+						"-",
+						instkod,
+						"_M_ERR.docx"
+					});
+					res = this.con.getRequestKBWKlkDocx(uri, savePath, 0);
+					Start.listaPlikow.Add(savePath);
+				}
+				savePath = string.Concat(new string[]
+				{
+					this.path,
+					"\\ProtocolsDef\\",
+					this.electoralEampaignSave,
+					"-",
+					instkod,
+					"_D_ERR.docx"
+				});
+				if (!Start.listaPlikow.Contains(savePath))
+				{
+					uri = string.Concat(new string[]
+					{
+						server2,
+						"layout/",
+						this.electoralEampaignURL,
+						"-",
+						instkod,
+						"_D_ERR.docx"
+					});
+					res = this.con.getRequestKBWKlkDocx(uri, savePath, 0);
+					Start.listaPlikow.Add(savePath);
+				}
+				savePath = string.Concat(new string[]
+				{
+					this.path,
+					"\\ProtocolsDef\\",
+					this.electoralEampaignSave,
+					"-",
+					instkod,
 					"_M_Walidacja.xml"
 				});
 				uri = string.Concat(new string[]
@@ -3140,6 +3239,29 @@ namespace Kalkulator1
 						"_1_EMPTY.docx"
 					});
 					res = this.con.getRequestKBWKlkDocx(uri, savePath, 0);
+				}
+				savePath = string.Concat(new string[]
+				{
+					this.path,
+					"\\ProtocolsDef\\",
+					this.electoralEampaignSave,
+					"-",
+					instkod,
+					"_1_ERR.docx"
+				});
+				if (!Start.listaPlikow.Contains(savePath))
+				{
+					uri = string.Concat(new string[]
+					{
+						server2,
+						"layout/",
+						this.electoralEampaignURL,
+						"-",
+						instkod,
+						"_1_ERR.docx"
+					});
+					res = this.con.getRequestKBWKlkDocx(uri, savePath, 0);
+					Start.listaPlikow.Add(savePath);
 				}
 				savePath = string.Concat(new string[]
 				{

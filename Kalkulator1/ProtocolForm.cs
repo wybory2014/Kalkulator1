@@ -61,7 +61,7 @@ namespace Kalkulator1
 		private System.Collections.Generic.Dictionary<string, string> typeValidation;
 		public KBWErrorProvider errorProvider1;
 		private ToolTip tooltipErrors;
-		private bool error;
+		public bool error;
 		private int currentStep;
 		private string version;
 		private Control lastControl;
@@ -3963,405 +3963,655 @@ namespace Kalkulator1
 											int save_as_candidate = 1;
 											foreach (XmlNode lista in candidatesRoot)
 											{
-												foreach (XmlNode paternNode in node)
+												XmlNode Lstatu = lista.Attributes.GetNamedItem("lista_status");
+												if (Lstatu != null && Lstatu.Value == "R")
 												{
-													if (paternNode.Name == "title")
+													foreach (XmlNode paternNode in node)
 													{
-														x = 0;
-														XmlNode bold = paternNode.Attributes.GetNamedItem("bold");
-														XmlNode nr = paternNode.Attributes.GetNamedItem("nr");
-														XmlNode komitet2 = paternNode.Attributes.GetNamedItem("komitet");
-														XmlNode nrListyVal = paternNode.Attributes.GetNamedItem("lista");
-														string text = "";
-														if (komitet2 != null)
+														if (paternNode.Name == "title")
 														{
-															XmlNode komitetText = lista.Attributes.GetNamedItem(komitet2.Value);
-															if (komitetText != null && komitetText.Value != "")
+															x = 0;
+															XmlNode bold = paternNode.Attributes.GetNamedItem("bold");
+															XmlNode nr = paternNode.Attributes.GetNamedItem("nr");
+															XmlNode komitet2 = paternNode.Attributes.GetNamedItem("komitet");
+															XmlNode nrListyVal = paternNode.Attributes.GetNamedItem("lista");
+															string text = "";
+															if (komitet2 != null)
 															{
-																text = komitetText.Value;
-															}
-														}
-														string valL = "";
-														if (nrListyVal != null)
-														{
-															XmlNode nrListyValText = lista.Attributes.GetNamedItem(nrListyVal.Value);
-															if (nrListyValText != null && nrListyValText.Value != "")
-															{
-																valL = nrListyValText.Value;
-															}
-														}
-														if (nr != null)
-														{
-															text = string.Concat(new string[]
-															{
-																nr.Value,
-																" ",
-																valL,
-																" ",
-																paternNode.InnerText,
-																text
-															});
-														}
-														else
-														{
-															text = paternNode.InnerText;
-														}
-														Label lab = new Label();
-														lab.Text = text;
-														lab.AutoSize = true;
-														lab.MaximumSize = new System.Drawing.Size(this.Form1panel.Size.Width, 0);
-														lab.Font = new System.Drawing.Font(this.myfont, 10f);
-														lab.Padding = new Padding(10, 0, 10, 0);
-														if (bold != null && bold.Value == "true")
-														{
-															lab.Font = new System.Drawing.Font(this.myfont, 10f, System.Drawing.FontStyle.Bold);
-														}
-														lab.Location = new System.Drawing.Point(x, y);
-														this.Form1panel.Controls.Add(lab);
-														y += lab.Size.Height + 30;
-													}
-													if (paternNode.Name == "patternrow")
-													{
-														System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
-														patternField = this.readPatternCandidate(paternNode, patternField);
-														for (int i = 0; i < patternField.Count; i++)
-														{
-															if (!patternField[i].needImportData())
-															{
-																x = 10;
-																Label lab = new Label();
-																lab.Text = patternField[i].getName1();
-																lab.AutoSize = true;
-																lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
-																lab.Font = new System.Drawing.Font(this.myfont, 9f);
-																lab.Location = new System.Drawing.Point(x, y);
-																x = this.Form2panel.Width - 95;
-																this.Form1panel.Controls.Add(lab);
-																TextBox inputNum = new TextBox();
-																inputNum.Size = new System.Drawing.Size(85, 20);
-																inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
-																inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
-																inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-																XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																if (value2 != null)
+																XmlNode komitetText = lista.Attributes.GetNamedItem(komitet2.Value);
+																if (komitetText != null && komitetText.Value != "")
 																{
-																	inputNum.Text = value2.InnerText;
-																}
-																inputNum.Location = new System.Drawing.Point(x, y);
-																inputNum.Validated += new System.EventHandler(this.number_Validated);
-																try
-																{
-																	this.typeValidation.Add(inputNum.Name, "number");
-																}
-																catch (System.Exception ex_25E6)
-																{
-																}
-																try
-																{
-																	this.Form1panel.Controls.Add(inputNum);
-																}
-																catch (System.Exception ex_25E6)
-																{
-																}
-																if (lab.Height > 20)
-																{
-																	y += lab.Height + 5;
-																}
-																else
-																{
-																	y += 25;
-																}
-																try
-																{
-																	this.range.Add(inputNum.Name, patternField[i].getRange(inputNum.Name));
-																}
-																catch (System.Exception)
-																{
+																	text = komitetText.Value;
 																}
 															}
-														}
-													}
-													if (paternNode.Name == "patternrows")
-													{
-														System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
-														patternField = this.readPatternCandidate(paternNode, patternField);
-														save_as_candidate = 1;
-														for (int j = 0; j < lista.ChildNodes.Count; j++)
-														{
-															string idcandidate = "";
+															string valL = "";
+															if (nrListyVal != null)
+															{
+																XmlNode nrListyValText = lista.Attributes.GetNamedItem(nrListyVal.Value);
+																if (nrListyValText != null && nrListyValText.Value != "")
+																{
+																	valL = nrListyValText.Value;
+																}
+															}
+															if (nr != null)
+															{
+																text = string.Concat(new string[]
+																{
+																	nr.Value,
+																	" ",
+																	valL,
+																	" ",
+																	paternNode.InnerText,
+																	text
+																});
+															}
+															else
+															{
+																text = paternNode.InnerText;
+															}
 															Label lab = new Label();
-															TextBox inputNum = new TextBox();
-															string statustTMP = "A";
+															lab.Text = text;
+															lab.AutoSize = true;
+															lab.MaximumSize = new System.Drawing.Size(this.Form1panel.Size.Width, 0);
+															lab.Font = new System.Drawing.Font(this.myfont, 10f);
+															lab.Padding = new Padding(10, 0, 10, 0);
+															if (bold != null && bold.Value == "true")
+															{
+																lab.Font = new System.Drawing.Font(this.myfont, 10f, System.Drawing.FontStyle.Bold);
+															}
+															lab.Location = new System.Drawing.Point(x, y);
+															this.Form1panel.Controls.Add(lab);
+															y += lab.Size.Height + 30;
+														}
+														if (paternNode.Name == "patternrow")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
 															for (int i = 0; i < patternField.Count; i++)
 															{
-																string status = "A";
-																if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
+																if (!patternField[i].needImportData())
 																{
-																	if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
+																	x = 10;
+																	Label lab = new Label();
+																	lab.Text = patternField[i].getName1();
+																	lab.AutoSize = true;
+																	lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
+																	lab.Font = new System.Drawing.Font(this.myfont, 9f);
+																	lab.Location = new System.Drawing.Point(x, y);
+																	x = this.Form2panel.Width - 95;
+																	this.Form1panel.Controls.Add(lab);
+																	TextBox inputNum = new TextBox();
+																	inputNum.Size = new System.Drawing.Size(85, 20);
+																	inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
+																	inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
+																	inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+																	XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																	if (value2 != null)
 																	{
-																		status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
+																		inputNum.Text = value2.InnerText;
+																	}
+																	inputNum.Location = new System.Drawing.Point(x, y);
+																	inputNum.Validated += new System.EventHandler(this.number_Validated);
+																	try
+																	{
+																		this.typeValidation.Add(inputNum.Name, "number");
+																	}
+																	catch (System.Exception ex_261F)
+																	{
+																	}
+																	try
+																	{
+																		this.Form1panel.Controls.Add(inputNum);
+																	}
+																	catch (System.Exception ex_261F)
+																	{
+																	}
+																	if (lab.Height > 20)
+																	{
+																		y += lab.Height + 5;
+																	}
+																	else
+																	{
+																		y += 25;
+																	}
+																	try
+																	{
+																		this.range.Add(inputNum.Name, patternField[i].getRange(inputNum.Name));
+																	}
+																	catch (System.Exception)
+																	{
 																	}
 																}
-																else
+															}
+														}
+														if (paternNode.Name == "patternrows")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															save_as_candidate = 1;
+															for (int j = 0; j < lista.ChildNodes.Count; j++)
+															{
+																string idcandidate = "";
+																Label lab = new Label();
+																TextBox inputNum = new TextBox();
+																string statustTMP = "A";
+																for (int i = 0; i < patternField.Count; i++)
 																{
-																	string label = patternField[i].getStatus().Replace("parent:", "");
-																	if (lista.Attributes.GetNamedItem(label) != null)
+																	string status = "A";
+																	if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
 																	{
-																		status = lista.Attributes.GetNamedItem(label).Value;
-																	}
-																}
-																statustTMP = status;
-																if (status == "A")
-																{
-																	string imie = "";
-																	string imie2 = "";
-																	string nazwisko = "";
-																	string komitet = "";
-																	string name2 = "";
-																	if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
+																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
 																		{
-																			string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
+																			status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
 																		}
 																	}
 																	else
 																	{
-																		string label = patternField[i].getDisplay().Replace("parent:", "");
+																		string label = patternField[i].getStatus().Replace("parent:", "");
 																		if (lista.Attributes.GetNamedItem(label) != null)
 																		{
-																			string isDisplay = lista.Attributes.GetNamedItem(label).Value;
+																			status = lista.Attributes.GetNamedItem(label).Value;
 																		}
 																	}
-																	if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																	statustTMP = status;
+																	if (status == "A")
 																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																		string imie = "";
+																		string imie2 = "";
+																		string nazwisko = "";
+																		string komitet = "";
+																		string name2 = "";
+																		if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
 																		{
-																			idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getIdCandidate().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			idcandidate = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
-																		{
-																			imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getImie2().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			imie2 = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
-																		{
-																			imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getImie1().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			imie = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
-																		{
-																			nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getNazwisko().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			nazwisko = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
-																		{
-																			komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getKomitet().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			komitet = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
-																		{
-																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
 																			{
-																				name2 = patternField[i].getName2();
-																			}
-																			else
-																			{
-																				name2 = patternField[i].getName2v2();
+																				string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
 																			}
 																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getPlec().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
+																		else
 																		{
-																			if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
+																			string label = patternField[i].getDisplay().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
 																			{
-																				name2 = patternField[i].getName2();
-																			}
-																			else
-																			{
-																				name2 = patternField[i].getName2v2();
+																				string isDisplay = lista.Attributes.GetNamedItem(label).Value;
 																			}
 																		}
-																	}
-																	string text = string.Concat(new string[]
-																	{
-																		patternField[i].getName1(),
-																		" ",
-																		nazwisko,
-																		" ",
-																		imie,
-																		" ",
-																		imie2,
-																		" ",
-																		name2,
-																		" ",
-																		komitet
-																	});
-																	if (patternField[i].getDataType() == "text" && patternField[i].getSave() == "")
-																	{
-																		x = 10;
-																		lab.Text = text;
-																		lab.AutoSize = true;
-																		lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
-																		lab.Font = new System.Drawing.Font(this.myfont, 9f);
-																		lab.Location = new System.Drawing.Point(x, y);
-																		x = this.Form2panel.Width - 95;
-																		this.Form1panel.Controls.Add(lab);
-																	}
-																	if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
-																	{
-																		inputNum.Size = new System.Drawing.Size(85, 20);
-																		string nameFI = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
-																		inputNum.Name = nameFI;
-																		XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																		if (value2 != null)
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
 																		{
-																			inputNum.Text = value2.InnerText;
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
 																		}
-																		inputNum.Location = new System.Drawing.Point(x, y);
-																		inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
-																		inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-																		inputNum.Validated += new System.EventHandler(this.number_Validated);
-																		try
+																		else
 																		{
-																			this.typeValidation.Add(inputNum.Name, "number");
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
 																		}
-																		catch (System.Exception)
+																		if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
 																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
+																			{
+																				imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
+																			}
 																		}
-																		if (!(patternField[i].getDisplay().ToLower() == "false"))
+																		else
 																		{
+																			string label = patternField[i].getImie2().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie2 = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
+																			{
+																				imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie1().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
+																			{
+																				nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getNazwisko().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				nazwisko = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
+																			{
+																				komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getKomitet().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				komitet = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
+																			{
+																				if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getPlec().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		string text = string.Concat(new string[]
+																		{
+																			patternField[i].getName1(),
+																			" ",
+																			nazwisko,
+																			" ",
+																			imie,
+																			" ",
+																			imie2,
+																			" ",
+																			name2,
+																			" ",
+																			komitet
+																		});
+																		if (patternField[i].getDataType() == "text" && patternField[i].getSave() == "")
+																		{
+																			x = 10;
+																			lab.Text = text;
+																			lab.AutoSize = true;
+																			lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
+																			lab.Font = new System.Drawing.Font(this.myfont, 9f);
+																			lab.Location = new System.Drawing.Point(x, y);
+																			x = this.Form2panel.Width - 95;
+																			this.Form1panel.Controls.Add(lab);
+																		}
+																		if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																		{
+																			inputNum.Size = new System.Drawing.Size(85, 20);
+																			string nameFI = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
+																			inputNum.Name = nameFI;
+																			XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																			if (value2 != null)
+																			{
+																				inputNum.Text = value2.InnerText;
+																			}
+																			inputNum.Location = new System.Drawing.Point(x, y);
+																			inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
+																			inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+																			inputNum.Validated += new System.EventHandler(this.number_Validated);
 																			try
 																			{
-																				this.Form1panel.Controls.Add(inputNum);
+																				this.typeValidation.Add(inputNum.Name, "number");
 																			}
 																			catch (System.Exception)
 																			{
 																			}
+																			if (!(patternField[i].getDisplay().ToLower() == "false"))
+																			{
+																				try
+																				{
+																					this.Form1panel.Controls.Add(inputNum);
+																				}
+																				catch (System.Exception)
+																				{
+																				}
+																			}
+																			if (lab.Height > 20)
+																			{
+																				y += lab.Height + 5;
+																			}
+																			else
+																			{
+																				y += 25;
+																			}
+																			try
+																			{
+																				this.range.Add(inputNum.Name, patternField[i].getRange(inputNum.Name));
+																			}
+																			catch (System.Exception)
+																			{
+																			}
+																			this.candidatesRule[inputNum.Name] = idcandidate;
+																			idcandidate = "";
 																		}
-																		if (lab.Height > 20)
+																	}
+																	if (status == "S")
+																	{
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
 																		{
-																			y += lab.Height + 5;
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
 																		}
 																		else
 																		{
-																			y += 25;
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
 																		}
-																		try
+																		if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
 																		{
-																			this.range.Add(inputNum.Name, patternField[i].getRange(inputNum.Name));
+																			string name3 = patternField[i].getSave().Replace("X", "S" + j.ToString()).Replace("Y", nrListy.ToString());
+																			string text2 = this.xmlKandydaci;
+																			this.xmlKandydaci = string.Concat(new string[]
+																			{
+																				text2,
+																				"<",
+																				name3,
+																				" id_kand=\"",
+																				idcandidate,
+																				"\">X</",
+																				name3,
+																				">"
+																			});
+																			idcandidate = "";
 																		}
-																		catch (System.Exception)
-																		{
-																		}
-																		this.candidatesRule[inputNum.Name] = idcandidate;
-																		idcandidate = "";
 																	}
 																}
-																if (status == "S")
+																if (statustTMP == "A")
 																{
-																	if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																	save_as_candidate++;
+																}
+															}
+															this.countcandidatesoflist.Add(new int[]
+															{
+																nrListy,
+																save_as_candidate - 1
+															});
+														}
+													}
+													nrListy++;
+													y += 30;
+												}
+												if (Lstatu != null && Lstatu.Value == "U")
+												{
+													foreach (XmlNode paternNode in node)
+													{
+														if (paternNode.Name == "patternrow")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															for (int i = 0; i < patternField.Count; i++)
+															{
+																if (!patternField[i].needImportData())
+																{
+																	string name3 = patternField[i].getSave().Replace("Y", nrListy.ToString());
+																	string text2 = this.xmlKandydaci;
+																	this.xmlKandydaci = string.Concat(new string[]
 																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																		text2,
+																		"<",
+																		name3,
+																		">X</",
+																		name3,
+																		">"
+																	});
+																}
+															}
+														}
+														if (paternNode.Name == "patternrows")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															save_as_candidate = 1;
+															for (int j = 0; j < lista.ChildNodes.Count; j++)
+															{
+																string idcandidate = "";
+																Label lab = new Label();
+																TextBox inputNum = new TextBox();
+																string statustTMP = "A";
+																for (int i = 0; i < patternField.Count; i++)
+																{
+																	string status = "A";
+																	if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
+																	{
+																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
 																		{
-																			idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
 																		}
 																	}
 																	else
 																	{
-																		string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																		string label = patternField[i].getStatus().Replace("parent:", "");
 																		if (lista.Attributes.GetNamedItem(label) != null)
 																		{
-																			idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			status = lista.Attributes.GetNamedItem(label).Value;
 																		}
 																	}
-																	if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																	statustTMP = status;
+																	if (status == "A")
 																	{
-																		string name3 = patternField[i].getSave().Replace("X", "S" + j.ToString()).Replace("Y", nrListy.ToString());
-																		string text2 = this.xmlKandydaci;
-																		this.xmlKandydaci = string.Concat(new string[]
+																		string imie = "";
+																		string imie2 = "";
+																		string nazwisko = "";
+																		string komitet = "";
+																		string name2 = "";
+																		if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
 																		{
-																			text2,
-																			"<",
-																			name3,
-																			" id_kand=\"",
-																			idcandidate,
-																			"\">X</",
-																			name3,
-																			">"
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
+																			{
+																				string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getDisplay().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				string isDisplay = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
+																			{
+																				imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie2().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie2 = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
+																			{
+																				imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie1().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
+																			{
+																				nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getNazwisko().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				nazwisko = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
+																			{
+																				komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getKomitet().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				komitet = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
+																			{
+																				if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getPlec().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		string text = string.Concat(new string[]
+																		{
+																			patternField[i].getName1(),
+																			" ",
+																			nazwisko,
+																			" ",
+																			imie,
+																			" ",
+																			imie2,
+																			" ",
+																			name2,
+																			" ",
+																			komitet
 																		});
-																		idcandidate = "";
+																	}
+																	if (status == "S")
+																	{
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																		{
+																			string name3 = patternField[i].getSave().Replace("X", "S" + j.ToString()).Replace("Y", nrListy.ToString());
+																			string text2 = this.xmlKandydaci;
+																			this.xmlKandydaci = string.Concat(new string[]
+																			{
+																				text2,
+																				"<",
+																				name3,
+																				" id_kand=\"",
+																				idcandidate,
+																				"\">X</",
+																				name3,
+																				">"
+																			});
+																			idcandidate = "";
+																		}
 																	}
 																}
+																if (statustTMP == "A")
+																{
+																	save_as_candidate++;
+																}
 															}
-															if (statustTMP == "A")
+															this.countcandidatesoflist.Add(new int[]
 															{
-																save_as_candidate++;
-															}
+																nrListy,
+																save_as_candidate - 1
+															});
 														}
-														this.countcandidatesoflist.Add(new int[]
-														{
-															nrListy,
-															save_as_candidate - 1
-														});
 													}
 												}
-												nrListy++;
-												y += 30;
 											}
 										}
 									}
@@ -4583,8 +4833,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_40F3 = lab;
-											expr_40F3.Text += node.InnerText;
+											Label expr_4DCB = lab;
+											expr_4DCB.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
@@ -5349,329 +5599,579 @@ namespace Kalkulator1
 											int save_as_candidate = 1;
 											foreach (XmlNode lista in candidatesRoot)
 											{
-												foreach (XmlNode paternNode in node)
+												XmlNode Lstatu = lista.Attributes.GetNamedItem("lista_status");
+												if (Lstatu != null && Lstatu.Value == "R")
 												{
-													if (paternNode.Name == "title")
+													foreach (XmlNode paternNode in node)
 													{
-														x = 0;
-														XmlNode bold = paternNode.Attributes.GetNamedItem("bold");
-														XmlNode nr = paternNode.Attributes.GetNamedItem("nr");
-														XmlNode komitet2 = paternNode.Attributes.GetNamedItem("komitet");
-														XmlNode nrListyVal = paternNode.Attributes.GetNamedItem("lista");
-														string text = "";
-														if (komitet2 != null)
+														if (paternNode.Name == "title")
 														{
-															XmlNode komitetText = lista.Attributes.GetNamedItem(komitet2.Value);
-															if (komitetText != null && komitetText.Value != "")
+															x = 0;
+															XmlNode bold = paternNode.Attributes.GetNamedItem("bold");
+															XmlNode nr = paternNode.Attributes.GetNamedItem("nr");
+															XmlNode komitet2 = paternNode.Attributes.GetNamedItem("komitet");
+															XmlNode nrListyVal = paternNode.Attributes.GetNamedItem("lista");
+															string text = "";
+															if (komitet2 != null)
 															{
-																text = komitetText.Value;
-															}
-														}
-														string valL = "";
-														if (nrListyVal != null)
-														{
-															XmlNode nrListyValText = lista.Attributes.GetNamedItem(nrListyVal.Value);
-															if (nrListyValText != null && nrListyValText.Value != "")
-															{
-																valL = nrListyValText.Value;
-															}
-														}
-														if (nr != null)
-														{
-															text = string.Concat(new string[]
-															{
-																nr.Value,
-																" ",
-																valL,
-																" ",
-																paternNode.InnerText,
-																text
-															});
-														}
-														Label lab = new Label();
-														lab.Text = text;
-														lab.AutoSize = true;
-														lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Size.Width, 0);
-														lab.Font = new System.Drawing.Font(this.myfont, 10f);
-														lab.Padding = new Padding(10, 0, 10, 0);
-														if (bold != null && bold.Value == "true")
-														{
-															lab.Font = new System.Drawing.Font(this.myfont, 10f, System.Drawing.FontStyle.Bold);
-														}
-														lab.Location = new System.Drawing.Point(x, y);
-														this.Form2panel.Controls.Add(lab);
-														y += lab.Size.Height + 30;
-													}
-													if (paternNode.Name == "patternrow")
-													{
-														System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
-														patternField = this.readPatternCandidate(paternNode, patternField);
-														for (int i = 0; i < patternField.Count; i++)
-														{
-															if (!patternField[i].needImportData())
-															{
-																x = 10;
-																Label lab = new Label();
-																lab.Text = patternField[i].getName1();
-																lab.AutoSize = true;
-																lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
-																lab.Font = new System.Drawing.Font(this.myfont, 9f);
-																lab.Location = new System.Drawing.Point(x, y);
-																x = this.Form2panel.Width - 95;
-																this.Form2panel.Controls.Add(lab);
-																TextBox inputNum = new TextBox();
-																inputNum.Size = new System.Drawing.Size(85, 20);
-																inputNum.TabIndex = count;
-																count--;
-																inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
-																XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																if (value2 != null)
+																XmlNode komitetText = lista.Attributes.GetNamedItem(komitet2.Value);
+																if (komitetText != null && komitetText.Value != "")
 																{
-																	inputNum.Text = value2.InnerText;
-																}
-																inputNum.Location = new System.Drawing.Point(x, y);
-																inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
-																inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-																inputNum.Validated += new System.EventHandler(this.number_Validated);
-																this.Form2panel.Controls.Add(inputNum);
-																if (lab.Height > 20)
-																{
-																	y += lab.Height + 5;
-																}
-																else
-																{
-																	y += 25;
+																	text = komitetText.Value;
 																}
 															}
-														}
-													}
-													if (paternNode.Name == "patternrows")
-													{
-														System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
-														patternField = this.readPatternCandidate(paternNode, patternField);
-														save_as_candidate = 1;
-														for (int j = 0; j < lista.ChildNodes.Count; j++)
-														{
-															string idcandidate = "";
+															string valL = "";
+															if (nrListyVal != null)
+															{
+																XmlNode nrListyValText = lista.Attributes.GetNamedItem(nrListyVal.Value);
+																if (nrListyValText != null && nrListyValText.Value != "")
+																{
+																	valL = nrListyValText.Value;
+																}
+															}
+															if (nr != null)
+															{
+																text = string.Concat(new string[]
+																{
+																	nr.Value,
+																	" ",
+																	valL,
+																	" ",
+																	paternNode.InnerText,
+																	text
+																});
+															}
 															Label lab = new Label();
-															TextBox inputNum = new TextBox();
-															string statustTMP = "A";
+															lab.Text = text;
+															lab.AutoSize = true;
+															lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Size.Width, 0);
+															lab.Font = new System.Drawing.Font(this.myfont, 10f);
+															lab.Padding = new Padding(10, 0, 10, 0);
+															if (bold != null && bold.Value == "true")
+															{
+																lab.Font = new System.Drawing.Font(this.myfont, 10f, System.Drawing.FontStyle.Bold);
+															}
+															lab.Location = new System.Drawing.Point(x, y);
+															this.Form2panel.Controls.Add(lab);
+															y += lab.Size.Height + 30;
+														}
+														if (paternNode.Name == "patternrow")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
 															for (int i = 0; i < patternField.Count; i++)
 															{
-																string status = "A";
-																if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
+																if (!patternField[i].needImportData())
 																{
-																	if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
+																	x = 10;
+																	Label lab = new Label();
+																	lab.Text = patternField[i].getName1();
+																	lab.AutoSize = true;
+																	lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
+																	lab.Font = new System.Drawing.Font(this.myfont, 9f);
+																	lab.Location = new System.Drawing.Point(x, y);
+																	x = this.Form2panel.Width - 95;
+																	this.Form2panel.Controls.Add(lab);
+																	TextBox inputNum = new TextBox();
+																	inputNum.Size = new System.Drawing.Size(85, 20);
+																	inputNum.TabIndex = count;
+																	count--;
+																	inputNum.Name = patternField[i].getSave().Replace("Y", nrListy.ToString());
+																	XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																	if (value2 != null)
 																	{
-																		status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
+																		inputNum.Text = value2.InnerText;
+																	}
+																	inputNum.Location = new System.Drawing.Point(x, y);
+																	inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
+																	inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+																	inputNum.Validated += new System.EventHandler(this.number_Validated);
+																	this.Form2panel.Controls.Add(inputNum);
+																	if (lab.Height > 20)
+																	{
+																		y += lab.Height + 5;
+																	}
+																	else
+																	{
+																		y += 25;
 																	}
 																}
-																else
+															}
+														}
+														if (paternNode.Name == "patternrows")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															save_as_candidate = 1;
+															for (int j = 0; j < lista.ChildNodes.Count; j++)
+															{
+																string idcandidate = "";
+																Label lab = new Label();
+																TextBox inputNum = new TextBox();
+																string statustTMP = "A";
+																for (int i = 0; i < patternField.Count; i++)
 																{
-																	string label = patternField[i].getStatus().Replace("parent:", "");
-																	if (lista.Attributes.GetNamedItem(label) != null)
+																	string status = "A";
+																	if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
 																	{
-																		status = lista.Attributes.GetNamedItem(label).Value;
-																	}
-																}
-																statustTMP = status;
-																if (status == "A")
-																{
-																	string imie = "";
-																	string imie2 = "";
-																	string nazwisko = "";
-																	string name2 = "";
-																	string komitet = "";
-																	if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
+																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
 																		{
-																			string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
+																			status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
 																		}
 																	}
 																	else
 																	{
-																		string label = patternField[i].getDisplay().Replace("parent:", "");
+																		string label = patternField[i].getStatus().Replace("parent:", "");
 																		if (lista.Attributes.GetNamedItem(label) != null)
 																		{
-																			string isDisplay = lista.Attributes.GetNamedItem(label).Value;
+																			status = lista.Attributes.GetNamedItem(label).Value;
 																		}
 																	}
-																	if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																	statustTMP = status;
+																	if (status == "A")
 																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																		string imie = "";
+																		string imie2 = "";
+																		string nazwisko = "";
+																		string name2 = "";
+																		string komitet = "";
+																		if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
 																		{
-																			idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getIdCandidate().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			idcandidate = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
-																		{
-																			imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getImie2().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			imie2 = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
-																		{
-																			imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getImie1().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			imie = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
-																		{
-																			nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getNazwisko().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			nazwisko = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
-																		{
-																			komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getKomitet().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			komitet = lista.Attributes.GetNamedItem(label).Value;
-																		}
-																	}
-																	if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
-																	{
-																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
-																		{
-																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
 																			{
-																				name2 = patternField[i].getName2();
+																				string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
 																			}
-																			else
-																			{
-																				name2 = patternField[i].getName2v2();
-																			}
-																		}
-																	}
-																	else
-																	{
-																		string label = patternField[i].getPlec().Replace("parent:", "");
-																		if (lista.Attributes.GetNamedItem(label) != null)
-																		{
-																			if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
-																			{
-																				name2 = patternField[i].getName2();
-																			}
-																			else
-																			{
-																				name2 = patternField[i].getName2v2();
-																			}
-																		}
-																	}
-																	string text = string.Concat(new string[]
-																	{
-																		patternField[i].getName1(),
-																		" ",
-																		nazwisko,
-																		" ",
-																		imie,
-																		" ",
-																		imie2,
-																		" ",
-																		name2,
-																		" ",
-																		komitet
-																	});
-																	if (patternField[i].getDataType() == "text" && patternField[i].getSave() == "")
-																	{
-																		x = 10;
-																		lab.Text = text;
-																		lab.AutoSize = true;
-																		lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
-																		lab.Font = new System.Drawing.Font(this.myfont, 9f);
-																		lab.Location = new System.Drawing.Point(x, y);
-																		x = this.Form2panel.Width - 95;
-																		this.Form2panel.Controls.Add(lab);
-																	}
-																	if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
-																	{
-																		inputNum.Size = new System.Drawing.Size(85, 20);
-																		inputNum.Name = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
-																		XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
-																		if (value2 != null)
-																		{
-																			inputNum.Text = value2.InnerText;
-																		}
-																		inputNum.Location = new System.Drawing.Point(x, y);
-																		inputNum.TabIndex = count;
-																		count--;
-																		inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
-																		inputNum.LostFocus += new System.EventHandler(this.LostFocus);
-																		inputNum.Validated += new System.EventHandler(this.number_Validated);
-																		if (!(patternField[i].getDisplay().ToLower() == "false"))
-																		{
-																			this.Form2panel.Controls.Add(inputNum);
-																		}
-																		if (lab.Height > 20)
-																		{
-																			y += lab.Height + 5;
 																		}
 																		else
 																		{
-																			y += 25;
+																			string label = patternField[i].getDisplay().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				string isDisplay = lista.Attributes.GetNamedItem(label).Value;
+																			}
 																		}
-																		this.candidatesRule[inputNum.Name] = idcandidate;
-																		idcandidate = "";
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
+																			{
+																				imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie2().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie2 = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
+																			{
+																				imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie1().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
+																			{
+																				nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getNazwisko().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				nazwisko = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
+																			{
+																				komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getKomitet().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				komitet = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
+																			{
+																				if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getPlec().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		string text = string.Concat(new string[]
+																		{
+																			patternField[i].getName1(),
+																			" ",
+																			nazwisko,
+																			" ",
+																			imie,
+																			" ",
+																			imie2,
+																			" ",
+																			name2,
+																			" ",
+																			komitet
+																		});
+																		if (patternField[i].getDataType() == "text" && patternField[i].getSave() == "")
+																		{
+																			x = 10;
+																			lab.Text = text;
+																			lab.AutoSize = true;
+																			lab.MaximumSize = new System.Drawing.Size(this.Form2panel.Width - 105, 0);
+																			lab.Font = new System.Drawing.Font(this.myfont, 9f);
+																			lab.Location = new System.Drawing.Point(x, y);
+																			x = this.Form2panel.Width - 95;
+																			this.Form2panel.Controls.Add(lab);
+																		}
+																		if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																		{
+																			inputNum.Size = new System.Drawing.Size(85, 20);
+																			inputNum.Name = patternField[i].getSave().Replace("X", save_as_candidate.ToString()).Replace("Y", nrListy.ToString());
+																			XmlNode value2 = this.save.SelectSingleNode(pathXML + "/" + inputNum.Name);
+																			if (value2 != null)
+																			{
+																				inputNum.Text = value2.InnerText;
+																			}
+																			inputNum.Location = new System.Drawing.Point(x, y);
+																			inputNum.TabIndex = count;
+																			count--;
+																			inputNum.MouseClick += new MouseEventHandler(this.Control_S1_MouseClick);
+																			inputNum.LostFocus += new System.EventHandler(this.LostFocus);
+																			inputNum.Validated += new System.EventHandler(this.number_Validated);
+																			if (!(patternField[i].getDisplay().ToLower() == "false"))
+																			{
+																				this.Form2panel.Controls.Add(inputNum);
+																			}
+																			if (lab.Height > 20)
+																			{
+																				y += lab.Height + 5;
+																			}
+																			else
+																			{
+																				y += 25;
+																			}
+																			this.candidatesRule[inputNum.Name] = idcandidate;
+																			idcandidate = "";
+																		}
 																	}
 																}
+																if (statustTMP == "A")
+																{
+																	save_as_candidate++;
+																}
 															}
-															if (statustTMP == "A")
+															this.countcandidatesoflist.Add(new int[]
 															{
-																save_as_candidate++;
+																nrListy,
+																save_as_candidate - 1
+															});
+														}
+													}
+													nrListy++;
+													y += 30;
+												}
+												if (Lstatu != null && Lstatu.Value == "U")
+												{
+													foreach (XmlNode paternNode in node)
+													{
+														if (paternNode.Name == "patternrow")
+														{
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															for (int i = 0; i < patternField.Count; i++)
+															{
+																if (!patternField[i].needImportData())
+																{
+																	string name3 = patternField[i].getSave().Replace("Y", nrListy.ToString());
+																	string text2 = this.xmlKandydaci;
+																	this.xmlKandydaci = string.Concat(new string[]
+																	{
+																		text2,
+																		"<",
+																		name3,
+																		">X</",
+																		name3,
+																		">"
+																	});
+																}
 															}
 														}
-														this.countcandidatesoflist.Add(new int[]
+														if (paternNode.Name == "patternrows")
 														{
-															nrListy,
-															save_as_candidate - 1
-														});
+															System.Collections.Generic.List<Field> patternField = new System.Collections.Generic.List<Field>();
+															patternField = this.readPatternCandidate(paternNode, patternField);
+															save_as_candidate = 1;
+															for (int j = 0; j < lista.ChildNodes.Count; j++)
+															{
+																string idcandidate = "";
+																Label lab = new Label();
+																TextBox inputNum = new TextBox();
+																string statustTMP = "A";
+																for (int i = 0; i < patternField.Count; i++)
+																{
+																	string status = "A";
+																	if (patternField[i].getStatus() == patternField[i].getStatus().Replace("parent:", ""))
+																	{
+																		if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()) != null)
+																		{
+																			status = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getStatus()).Value;
+																		}
+																	}
+																	else
+																	{
+																		string label = patternField[i].getStatus().Replace("parent:", "");
+																		if (lista.Attributes.GetNamedItem(label) != null)
+																		{
+																			status = lista.Attributes.GetNamedItem(label).Value;
+																		}
+																	}
+																	statustTMP = status;
+																	if (status == "A")
+																	{
+																		string imie = "";
+																		string imie2 = "";
+																		string nazwisko = "";
+																		string komitet = "";
+																		string name2 = "";
+																		if (patternField[i].getDisplay() == patternField[i].getDisplay().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()) != null)
+																			{
+																				string isDisplay = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getDisplay()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getDisplay().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				string isDisplay = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie2() == patternField[i].getImie2().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()) != null)
+																			{
+																				imie2 = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie2()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie2().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie2 = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getImie1() == patternField[i].getImie1().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()) != null)
+																			{
+																				imie = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getImie1()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getImie1().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				imie = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getNazwisko() == patternField[i].getNazwisko().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()) != null)
+																			{
+																				nazwisko = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getNazwisko()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getNazwisko().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				nazwisko = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getKomitet() == patternField[i].getKomitet().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()) != null)
+																			{
+																				komitet = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getKomitet()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getKomitet().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				komitet = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getPlec() == patternField[i].getPlec().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()) != null)
+																			{
+																				if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getPlec()).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getPlec().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				if (lista.Attributes.GetNamedItem(label).Value.ToUpper() == "M")
+																				{
+																					name2 = patternField[i].getName2();
+																				}
+																				else
+																				{
+																					name2 = patternField[i].getName2v2();
+																				}
+																			}
+																		}
+																		string text = string.Concat(new string[]
+																		{
+																			patternField[i].getName1(),
+																			" ",
+																			nazwisko,
+																			" ",
+																			imie,
+																			" ",
+																			imie2,
+																			" ",
+																			name2,
+																			" ",
+																			komitet
+																		});
+																	}
+																	if (status == "S")
+																	{
+																		if (patternField[i].getIdCandidate() == patternField[i].getIdCandidate().Replace("parent:", ""))
+																		{
+																			if (lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()) != null)
+																			{
+																				idcandidate = lista.ChildNodes[j].Attributes.GetNamedItem(patternField[i].getIdCandidate()).Value;
+																			}
+																		}
+																		else
+																		{
+																			string label = patternField[i].getIdCandidate().Replace("parent:", "");
+																			if (lista.Attributes.GetNamedItem(label) != null)
+																			{
+																				idcandidate = lista.Attributes.GetNamedItem(label).Value;
+																			}
+																		}
+																		if (patternField[i].getDataType() == "number" && patternField[i].getSave() != "")
+																		{
+																			string name3 = patternField[i].getSave().Replace("X", "S" + j.ToString()).Replace("Y", nrListy.ToString());
+																			string text2 = this.xmlKandydaci;
+																			this.xmlKandydaci = string.Concat(new string[]
+																			{
+																				text2,
+																				"<",
+																				name3,
+																				" id_kand=\"",
+																				idcandidate,
+																				"\">X</",
+																				name3,
+																				">"
+																			});
+																			idcandidate = "";
+																		}
+																	}
+																}
+																if (statustTMP == "A")
+																{
+																	save_as_candidate++;
+																}
+															}
+															this.countcandidatesoflist.Add(new int[]
+															{
+																nrListy,
+																save_as_candidate - 1
+															});
+														}
 													}
 												}
-												nrListy++;
-												y += 30;
 											}
 										}
 									}
@@ -5893,8 +6393,8 @@ namespace Kalkulator1
 											{
 												lab.Text = node.ParentNode.Attributes.GetNamedItem("lp").Value + " ";
 											}
-											Label expr_3DC5 = lab;
-											expr_3DC5.Text += node.InnerText;
+											Label expr_4A9D = lab;
+											expr_4A9D.Text += node.InnerText;
 											lab.AutoSize = true;
 											lab.MaximumSize = new System.Drawing.Size(widthLine - placeForButton, 0);
 											lab.Font = new System.Drawing.Font(this.myfont, 9f);
@@ -9521,6 +10021,7 @@ namespace Kalkulator1
 										this.wait.setWaitPanel("Trwa wysyłanie protokołu", "Prosimy czekać");
 										this.wait.setVisible(true);
 										this.goodcertificate = false;
+										this.error = false;
 										Eksport ex2 = new Eksport(this.savePath, true, this, filepath, this.password);
 										try
 										{
@@ -9545,6 +10046,12 @@ namespace Kalkulator1
 											{
 												MessageBox.Show("Protokół został wysłany, ale nie można zmienić jego statusu. " + ex3.Message, "Uwaga");
 											}
+										}
+										if (!this.goodcertificate && this.error)
+										{
+											this.codeBarCode = "";
+											this.codeBarText = "";
+											this.saves(4);
 										}
 									}
 									else
@@ -9581,7 +10088,7 @@ namespace Kalkulator1
 								}
 							}
 						}
-						catch (System.ArgumentOutOfRangeException ex_583)
+						catch (System.ArgumentOutOfRangeException ex_5C5)
 						{
 						}
 					}
